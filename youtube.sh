@@ -38,15 +38,14 @@ read_arg(){
 #-------------------------------------------------
 helper(){
         #statements
-        echo " 脚本功能："
-        print_g "        将文件夹内格式为${types[*]}格式的文件上传到YouTube "
-        echo " 使用格式："
-        echo "        $0  文件目录1  文件目录2 ....  "
-        echo " 参数："
-        echo "        文件目录：要上传到YouTube的视频所在目录"
-
-        echo " 示例："
-        echo "        $0 /home/download/qsh /home/download/shiji "
+        print_r "--功能："
+        print_g "----将文件夹内格式为${types[*]}格式的文件上传到YouTube "
+        print_r "--使用格式："
+        print_g "        youtube  文件目录1  文件目录2 ....  "
+        print_r "--参数说明："
+        print_g "----文件目录：要上传到YouTube的视频所在目录"
+        print_r "--示例："
+        print_g "        youtube /home/download/qsh /home/download/shiji "
         exit
 }
 #-------------------------------------------------
@@ -106,7 +105,7 @@ read_dir(){
 
 #----------------------------函数定义结束----------------------------------------
 #如果灭有传任何参数则打印使用文档
-if [[ -z $1 ]]; then
+if [[ -z $1 || $1 == "-h"  ]]; then
     helper
     exit
 fi

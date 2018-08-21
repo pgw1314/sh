@@ -26,13 +26,17 @@ get_last_char_index(){
 #   
 #-------------------------------------------------
 get_file_type(){
+    old_file=$file
     file=$1
+    
 	#获取文件名结束的位置
 	get_last_char_index $file "\."
     #获取到后缀名
     index=$?
 	file_type=${file:$index:${#file}}
-	
+
+
+	file=old_file
 	unset index
 }
 

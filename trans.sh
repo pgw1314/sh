@@ -24,7 +24,6 @@ read_args(){
     read in_f_types 
     is_null "参数错误：转换的格式不能为空！" y $in_f_types
 
-    
     print_y "请输入新的视频格式： "
     read to_type
     is_null  "参数错误：新文件格式不能为空！ " y $to_type
@@ -94,13 +93,15 @@ preview(){
 #-------------------------------------------------
 helper(){
         #statements
-        echo " 使用格式："
-        echo "        $0  文件目录1  文件目录2 ....  "
-        echo " 参数："
-        echo "        文件目录：要转码的文件所在路径："
+        print_r "--功能："
+        print_g "----给视频文件转码"
+        print_r "--使用格式："
+        print_g "trans  文件目录1  文件目录2 ....  "
+        print_r "--参数说明："
+        print_g "----文件目录：视频文件所在路径："
 
-        echo " 示例："
-        echo "        $0 /home/download/qsh /home/download/shiji "
+        print_r "--示例："
+        print_g "trans /home/download/qsh /home/download/shiji "
         exit
 }
 #-------------------------------------------------
@@ -197,7 +198,7 @@ read_dir(){
 
 #----------------------------主程序开始----------------------------------------
  #检查文件名是否为空
- if [[ -z $1 ]]; then
+ if [[ -z $1 || $1 == "-h" ]]; then
      helper
  fi
  #获取视频的参数
