@@ -51,25 +51,25 @@ install_env(){
 #-------------------------------------------------
 install_ext(){
 	sudo pip install --upgrade pip
-	if [[ $? ]]; then
-		print_r "错误：pip更新失败!"
-		exit
-	fi
+	# if [[ $? ]]; then
+	# 	print_r "错误：pip更新失败!"
+	# 	exit
+	# fi
 	sudo pip install --upgrade google-api-python-client 
-	if [[ $? ]]; then
-		print_r "错误：google-api-python-client 扩展包安装失败!"
-		exit
-	fi
+	# if [[ $? ]]; then
+	# 	print_r "错误：google-api-python-client 扩展包安装失败!"
+	# 	exit
+	# fi
 	sudo pip install --upgrade oauth2client 
-	if [[ $? ]]; then
-		print_r "错误：oauth2client 扩展包安装失败!"
-		exit
-	fi
+	# if [[ $? ]]; then
+	# 	print_r "错误：oauth2client 扩展包安装失败!"
+	# 	exit
+	# fi
 	sudo pip install --upgrade progressbar2
-	if [[ $? ]]; then
-		print_r "错误：progressbar2 扩展包安装失败!"
-		exit
-	fi
+	# if [[ $? ]]; then
+	# 	print_r "错误：progressbar2 扩展包安装失败!"
+	# 	exit
+	# fi
 
 }
 #-------------------------------------------------
