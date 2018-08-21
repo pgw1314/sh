@@ -36,7 +36,7 @@ get_file_type(){
 	file_type=${file:$index:${#file}}
 
 
-	file=old_file
+	file=$old_file
 	unset index
 }
 
@@ -55,16 +55,19 @@ get_file_name(){
 	#获取文件名结束的位置
 	get_last_char_index $file "\."
     #获取到后缀名
-    index=$?
+    end=$?
+    
     #判断是否是目录
-    if [[ $index == ${#file} ]]; then
+    if [[ $end == ${#file} ]]; then
         file_name=$file
         else
-        file_name=${file:0: (( $index - 1)) }
+        # echo "file="$file
+        # echo "size="${#file}
+        # echo "start="$start
+        # echo "end="$end
+         file_name=${file:0:(( $end -1 ))}
     fi
 	
-	
-	unset index
 }
 
 
@@ -198,6 +201,8 @@ transing(){
     start_time=$3
     trans_args=$4
     time=$5
+    # print_args "$@"
+    # exit
     print_y "开始转码：$old_path "
     
     #判断是否要剪辑影片
@@ -213,6 +218,7 @@ transing(){
         fi 
     fi
     print_y "转码命令：" $cmd
+    #执行转码
     `$cmd`
     if [[ $? == 0 ]]; then
             print_g "转码成功：$new_path"
