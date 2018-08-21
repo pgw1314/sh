@@ -58,7 +58,10 @@ read_dir(){
     			#print_y "开始配置："$file_path
     			#替换文件路径
     			if [[ $2 == "rep"  ]]; then
+                    #替换函数库路径
     				replase_file_content $file_path ".\/funs" "\/usr\/local\/shell\/funs"  $temp_file
+                    #替换配置文件路径
+                    replase_file_content $file_path ".\/conf" "\/usr\/local\/shell\/conf"  $temp_file
     			fi
     			#配置环境变量
     			if [[ $2 == "env"  ]]; then
