@@ -50,6 +50,11 @@ install_env(){
 #功能：安装Python 扩展包
 #-------------------------------------------------
 install_ext(){
+	sudo pip install --upgrade pip
+	if [[ $? ]]; then
+		print_r "错误：pip更新失败!"
+		exit
+	fi
 	sudo pip install --upgrade google-api-python-client 
 	if [[ $? ]]; then
 		print_r "错误：google-api-python-client 扩展包安装失败!"
@@ -98,4 +103,7 @@ install_env
 install_ext
 #安装主程序
 installing
+#删除缓存
+rm -rf $tmp_path
+
 
