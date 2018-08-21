@@ -1,6 +1,0 @@
-. ./funs
-c替换sfds替换f替换s
-c替换sfds替换f替换s
-c替换sfds替换f替换s
-c替换fds替换ff替换s
-. ./funs
