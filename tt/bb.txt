@@ -1,0 +1,6 @@
+. ./funs
+casfdsafas
+casfdsafas
+casfdsafas
+cafdsaffas
+. ./funs

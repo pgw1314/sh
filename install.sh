@@ -13,7 +13,7 @@ temp_path=/tmp/shell
 #-------------------------------------------------
 #函数名称： 替换文件中的内容
 #
-#参数 文件路径 匹配模式 替换内容 输出
+#参数 文件路径 匹配模式 替换内容
 #   
 #功能：替换文件中的内容
 #-------------------------------------------------
@@ -21,21 +21,21 @@ replase_file_content(){
 	file_path=$1
 	pattern=$2
 	rep_con=$3
-	to_file_path=$4
 	#判断路径是否存在，是否为文件
 	if [[ -n $file_path && -f $file_path ]]; then
-		#print_y "开始替换："$file_path
-		# 判断是否备份
-		if [[ -z $to_file_path  ]]; then
-			to_file_path=$file_path
-		fi
-		#替换文件中的内容
-		cat $file_path | while read line; do
-				new_line=`echo $line | sed "s/$pattern/$rep_con/g"`
-				echo "$new_line" >> $to_file_path
-				#echo $new_line
-		done
-		#print_g "替换完成："$to_file_path
+
+		if [[ "$(uname)" == "Darwin" ]]; then
+            # Mac OS X 操作系统
+            #echo "Mac OS 操作系统"
+             sed -i "" "s/$pattern/$rep_con/g" $file_path
+        elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+            #echo "Linux 操作系统"
+            sed -i "s/$pattern/$rep_con/g" $file_path
+        else
+            print_r "错误：你的系统不支持！！"
+            exit
+        fi
+
 	fi
 }
 #-------------------------------------------------
@@ -58,10 +58,12 @@ read_dir(){
     			#print_y "开始配置："$file_path
     			#替换文件路径
     			if [[ $2 == "rep"  ]]; then
+                    #复制脚本
+                    cp $file_path $temp_file
                     #替换函数库路径
-    				replase_file_content $file_path ".\/funs" "\/usr\/local\/shell\/funs"  $temp_file
+    				replase_file_content $temp_file ".\/funs" "\/usr\/local\/shell\/funs"  
                     #替换配置文件路径
-                    replase_file_content $file_path ".\/conf" "\/usr\/local\/shell\/conf"  $temp_file
+                    replase_file_content $temp_file ".\/conf" "\/usr\/local\/shell\/conf"  
     			fi
     			#配置环境变量
     			if [[ $2 == "env"  ]]; then
@@ -91,10 +93,11 @@ read_dir(){
 #将所有代码拷贝到/usr/local/shell
 rm -rf $temp_path
 #print_y "请输入管理员密码！"
-sudo rm -rf $shell_path
+
 mkdir -p $temp_path
 if [[ $? != 0 ]]; then
 	print_r "临时文件夹：$temp_path创建错误！"
+    exit
 fi
 #cp -r ./ $temp_path
 #print_g "将所有脚本复制到：$temp_path"
@@ -103,12 +106,14 @@ print_y "开始修复脚本中的引用路径..."
 read_dir . rep
 print_g "引用路径修复成功！"
 print_y "开始复制脚本文件..."
+sudo rm -rf $shell_path
 sudo cp -r $temp_path /usr/local/
 sudo chmod -R 755 $shell_path
 if [[ $? == 0 ]]; then
 	print_g "脚本文件复制完成！！"
 else
 	print_r "安装错误：安装失败！！"
+    exit
 fi
 print_y "开始配置环境变量..."
 read_dir $shell_path env

@@ -238,3 +238,31 @@ transing(){
     fi
 
 }
+#-------------------------------------------------
+#函数名称： 替换文件中的内容
+#
+#参数 文件路径 匹配模式 替换内容
+#   
+#功能：替换文件中的内容
+#-------------------------------------------------
+replase_file_content(){
+    file_path=$1
+    pattern=$2
+    rep_con=$3
+    #判断路径是否存在，是否为文件
+    if [[ -n $file_path && -f $file_path ]]; then
+
+        if [[ "$(uname)" == "Darwin" ]]; then
+            # Mac OS X 操作系统
+            #echo "Mac OS 操作系统"
+             sed -i "" "s/$pattern/$rep_con/g" $file_path
+        elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+            #echo "Linux 操作系统"
+            sed -i "s/$pattern/$rep_con/g" $file_path
+        else
+            print_r "错误：你的系统不支持！！"
+            exit
+        fi
+
+    fi
+}
