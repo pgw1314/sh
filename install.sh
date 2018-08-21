@@ -24,13 +24,7 @@ read_dir(){
 
 }
 
-# pp=".\/funs"
-# th="\/usr\/local\/shell\/funs"
-# cat ./test.sh | while read line
-# do
-#     new_line=`echo $line  | sed "s/$pp/$th/g"`
-#     #echo $line >> bb.sh
-#     echo $new_line
+
 
 # done
 #将所有代码拷贝到/usr/local/shell
