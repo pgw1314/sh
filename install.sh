@@ -65,6 +65,8 @@ read_dir(){
     				replase_file_content $temp_file ".\/funs" "\/usr\/local\/shell\/funs"  
                     #替换配置文件路径
                     replase_file_content $temp_file ".\/conf" "\/usr\/local\/shell\/conf"  
+                    #替换配置文件路径
+                    replase_file_content $temp_file ".\/rename.sh" "\/usr\/local\/shell\/rename.sh" 
     			fi
     			#配置环境变量
     			if [[ $2 == "env"  ]]; then
@@ -117,8 +119,10 @@ print_y "开始修复脚本中的引用路径..."
 read_dir . rep
 print_g "引用路径修复成功！"
 print_y "开始复制脚本文件..."
+
 sudo rm -rf $shell_path
 sudo cp -r $temp_path /usr/local/
+
 sudo chmod -R 755 $shell_path
 if [[ $? == 0 ]]; then
 	print_g "脚本文件复制完成！！"
