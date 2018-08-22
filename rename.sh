@@ -3,9 +3,9 @@
 #
 #功能： 该脚本是用来批量给文件重命名
 #
-#版本：v0.0.1
+#版本：v1.0.2
 #
-#最后修改时间：2018年8月22日
+#最后修改时间：2018年8月23日
 #
 #############################################################
 
@@ -24,7 +24,7 @@
 #-------------------------------------------------
 hellper(){
         #statements
-        print_r "--功能："
+        print_r " 功能："
         print_g "---给文件或文件夹重命名！"
         print_r "--使用格式："
         print_g "         rename 文件路径 匹配  替换 替换模式 编号  繁简体转换 递归 "
@@ -41,7 +41,70 @@ hellper(){
         print_g "         rename /home/download \"[0-9]*\" \"aa\"  y 1 n n "
 }
 
+build_new_name(){
+        g_old_file_name=$1
+        # #获取文件名和文件类型
+        g_file_type=${1##*.}
+        if [[ $g_file_type == $g_old_file_name ]]; then
+            g_file_type=''
+        fi
 
+        # 获取文件名
+        b_n_n_file_name=${1%.*}
+        # #判断是否繁简体转换
+        if [[ $g_is_trans_name == "y" ]]; then
+           old_b_n_n_file_name=$b_n_n_file_name
+           b_n_n_file_name=$(echo $b_n_n_file_name | opencc -c t2s)
+           if [[ $? != 0 ]]; then
+            b_n_n_file_name=$old_b_n_n_file_name
+            print_y "错误：文件名转换为简体错误！！"
+           fi
+        fi
+        
+        # #判断匹配字符串和替换字符串是否为空
+        g_new_file_name=$(echo $b_n_n_file_name | sed "s/$g_pattern/$g_match/g")
+
+}
+
+
+#-------------------------------------------------
+#函数名称：重命名
+#   
+#参数：旧的文件路径  新的文件路径
+#   
+#功能：将文件重命名
+#   
+#-------------------------------------------------
+rename_file(){
+    #判断路径是否为空
+    if [[  -n $1 &&  -n $2 ]]; then
+        #判断两个路径是否一样
+        if [[ $1 != $2 ]]; then
+        #判断文件是否存在
+            if [[ -e $1 ]]; then
+                if [[ -z $g_is_log ]]; then
+                    print_y "开始重命名文件：$1"
+                fi
+                
+                $(mv "$1" "$2")
+                if [[ $? == 0 ]]; then
+                    if [[ -z $g_is_log ]]; then
+                        print_g "重命名完成：$2"
+                    fi
+                else
+                    print_r "错误：$1重命名失败！！"
+                fi
+            else
+                print_r "错误：$1文件或目录不存在！！"
+            fi
+
+        fi
+        
+    else
+        print_r "错误：重命名原文件路径和新文件路径都不能为空！"
+    fi
+    
+}
 
 #-------------------------------------------------
 #函数名称：准备数据
@@ -52,41 +115,56 @@ hellper(){
 #   
 #-------------------------------------------------
 pre_data(){
-        old_file=$file
-        old_path=$path"/"$file
+
+        pre_data_path=$1
+        pre_data_file=$2
+        #原文件路径
+        g_old_file_path=$1"/"$2
+
         
-        #替换文件名中的空格
-        new_path=`echo $path | sed "s/ /_/g"`
-        new_file=`echo $file | sed "s/ /_/g"`
-        #获取文件名和文件类型
-        get_file_name $new_file
-        new_file=$file_name
-        get_file_type $file
+        
+        # #替换文件名中的空格
+        # pre_data_new_path=$(echo "$pre_data_path" | sed "s/ /_/g")
+        #pre_data_new_file=$(echo "$pre_data_file" | sed "s/ /_/g")    
+        # pre_data_new_file_path=$pre_data_new_path/$pre_data_new_file
+
+        # #构建新的文件名b_n_n_new_file_name
+        build_new_name $(echo "$pre_data_file" | sed "s/ /_/g")
+        pre_data_new_file_name=$g_new_file_name
        
-        #判断是否繁简体转换
-        if [[ (-n $fj) && ($fj == "y")]]; then
-           new_file=`echo $new_file | opencc -c t2s`
-        fi
-        
-        #判断匹配字符串和替换字符串是否为空
-        new_file=`echo $new_file | sed "s/$pp/$th/g"`
-    
-        #判断是否为文件标号
-        if [[ $bh =~ ^-?[0-9]+$ ]]; then
-            if [[ $bh -lt 10 ]]; then
-                    new_file="0"$bh"-"$new_file
+        # #判断是否为文件标号
+        if [[ $g_number =~ ^-?[0-9]+$ ]]; then
+            if [[ $g_number -lt 10 ]]; then
+                    pre_data_new_file_name="0"$g_number"-"$pre_data_new_file_name
             else
-                  new_file=$bh"-"$new_file
+                  pre_data_new_file_name=$g_number"-"$pre_data_new_file_name
             fi
             #增加索引
-            bh=`expr $bh + 1`
+            g_number=`expr $g_number + 1`
 
         fi
-        #新文件夹路径和新文件名
-        if [[ -n $file_type ]]; then
-                new_file=$new_file"."$file_type
+        #新的文件路径
+        if [[ -z $g_file_type ]]; then
+                g_new_file_path=$pre_data_path/$pre_data_new_file_name
+             else
+                g_new_file_path=$pre_data_path/$pre_data_new_file_name.$g_file_type
         fi
-        new_path=$new_path"/"$new_file
+        # print_y "--------------------pre_data 变量列表---------------------"
+        # print_g "pre_data_path=$pre_data_path"
+        # print_g "pre_data_file=$pre_data_file"
+        # print_y "pre_data_new_file_path=$pre_data_new_file_path"
+
+        # print_g "pre_data_file_path=$pre_data_file_path"
+        # print_y "pre_data_file_type=$pre_data_file_type"
+        # print_r "pre_data_new_path=$pre_data_new_path"
+        # print_r "pre_data_new_file=$pre_data_new_file"
+        # print_r "pre_data_new_file_path=$pre_data_new_file_path"
+        # print_y "------------------------------------------------------"
+        # #新文件夹路径和新文件名
+        # if [[ -n $file_type ]]; then
+        #         new_file=$new_file"."$file_type
+        # fi
+        # new_path=$new_path"/"$new_file
 }
 #-------------------------------------------------
 #函数名称：预览模式
@@ -96,16 +174,16 @@ pre_data(){
 #-------------------------------------------------
 preview(){
             echo  "------------------------------------------------------------------------"
-            print_r "原文件名：$old_file"
-            print_g "新文件名：$new_file "
-            print_y "文件格式：$file_type "
-            if [[ (-n $fj) && ($fj == "y") ]]; then
-                print_g "繁简体转换：开启 "
+            print_r "原文件名：$g_old_file_name"
+            print_g "新文件名：$g_new_file_name "
+            print_y "文件格式：$g_file_type "
+            if [[ $g_is_trans_name == "y" ]]; then
+                print_g "将文件名转换为简体：开启 "
             else
-                print_r "繁简体转换：关闭 "
+                print_r "将文件名转换为简体：关闭 "
             fi
-            print_r "原文件路径：$old_path"
-            print_g "新文件路径：$new_path"
+            print_r "原文件路径：$g_old_file_path"
+            print_g "新文件路径：$g_new_file_path"
             echo  "------------------------------------------------------------------------" 
 }
 
@@ -118,31 +196,102 @@ preview(){
 #   
 #-------------------------------------------------
 read_dir(){
-    path=$1
+    read_dir_path=$1
     #检查路径是否最后是否带/
-    check_path_last_char $path
-    ls $path | while read file; do
-        #准备新文件名数据
-        pre_data $path $file
+   # print_g "read_dir_path=$read_dir_path"
+    ls $read_dir_path | while read read_dir_file; do
+        read_dir_file_path="$read_dir_path/$read_dir_file"
+        # print_y "--------------------read_dir 变量列表---------------------"
+        # print_g "read_dir_path=$read_dir_path"
+        # print_g "read_dir_file=$read_dir_file"
+        # print_y "------------------------------------------------------"
+        # return
+        # #准备新文件名数据
+         pre_data "$read_dir_path" "$read_dir_file"
+         ##开始重命名文件
+         if [[  $g_is_rep == "y" ]]; then
+                rename_file "$g_old_file_path" "$g_new_file_path"
+             else
+                if [[ -z $g_is_log ]]; then
+                    preview
+                fi
+                
+         fi
+        
   
-        #为y则重命名否则为预览模式
-        if [[ (-n $thms) && ($thms == "y")]]; then
-                rename "$old_path" "$new_path"
-            else
-                preview
-        fi
-        #判断是否递归
-        if [[ (-n $dg) && ($dg == "y") ]]; then
-            if [[ -d $new_path ]]; then
-                    #echo "递归"
-                read_dir $new_path
-            fi
+        # #为y则重命名否则为预览模式
+        # if [[ (-n $g_is_rep) && ($g_is_rep == "y")]]; then
+        #         rename "$old_path" "$new_path"
+        #     else
+        #         preview
+        # fi
+        # print_g "read_dir_file_path=$read_dir_file_path"
+        # #判断是否递归
+        # if [[ $g_is_tree == "y" ]]; then
+            # if [[ ! -f "$read_dir_file_path" ]]; then
+            #         #echo "递归"
+            #     # print_y "--------------------递归 变量列表---------------------"
+            #     # print_r "read_dir_file_path=$read_dir_file_path"
+            #     # print_y "------------------------------------------------------"
+            #     read_dir "$read_dir_file_path"
+            # fi
             
-        fi
+        # fi
     done
 }
 
 #----------------------------函数定义结束----------------------------------------
+
+init_arg(){
+    # 参数个数
+    g_arg_num=$#
+    #初始化参数
+    g_path=${1%/}
+     #匹配模式
+    g_pattern=$2
+    #替换字符串
+    g_match=$3
+    #是否替换
+    g_is_rep=$4
+    #编号
+    g_number=$5
+    #繁简体转换
+    g_is_trans_name=$6
+    #递归
+    # g_is_tree=$7
+    #是否打印log
+    g_is_log=$7
+    #旧的文件路径
+    g_old_file_path=''
+    #新的的文件路径
+    g_new_file_path=''
+    # 旧的文件名
+    g_old_file_name=''
+    # 新的文件名
+    g_new_file_name=''
+    #文件类型
+    g_file_type=''
+
+    
+    #默认替换空格文件名,如果匹配模式等于空
+    if [[ $g_pattern == "y" && $g_arg_num -eq 2 ]]; then
+        #statements
+        g_pattern=" "
+        g_match="_"
+        g_is_rep="y"
+    fi
+    # print_y "--------------------init_arg变量列表---------------------"
+    # print_g "g_arg_num=$g_arg_num"
+    # print_g "g_path=$g_path"
+    # print_g "g_pattern=$g_pattern"
+    # print_g "g_match=$g_match"
+    # print_g "g_is_rep=$g_is_rep"
+    # print_g "g_number=$g_number"
+    # print_g "g_is_trans_name=$g_is_trans_name"
+    # print_g "g_is_log=$g_is_log"
+    # print_y "------------------------------------------------------"
+
+}
 
 #----------------------------主程序开始----------------------------------------
 
@@ -151,35 +300,10 @@ read_dir(){
         hellper
         exit
     fi
-    #初始化参数
-     #匹配
-    pp=$2
-    #替换
-    th=$3
-    #替换模式
-    thms=$4
-    #编号
-    bh=$5
-    #繁简体转换
-    fj=$6
-    #递归
-    dg=$7
-    
-    
-    #替换空格文件名
-    if [[ -z $pp ]]; then
-        #statements
-        pp=" "
-    fi
-    if [[ ($pp == "y") && ( -z $th)  ]]; then
-        #statements
-        pp=" "
-        th="_"
-        thms="y"
-    fi
+    init_arg "$@"
 
     #获取文件列表
-    read_dir $1
+    read_dir $g_path
 
 
 
