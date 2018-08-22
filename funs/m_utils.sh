@@ -36,18 +36,19 @@ get_last_char_index(){
 #   
 #-------------------------------------------------
 get_file_type(){
-    old_file=$file
-    file=$1
+    file_type=${1##*.}
+ #    old_file=$file
+ #    file=$1
     
-	#获取文件名结束的位置
-	get_last_char_index $file "\."
-    #获取到后缀名
-    index=$?
-	file_type=${file:$index:${#file}}
+	# #获取文件名结束的位置
+	# get_last_char_index $file "\."
+ #    #获取到后缀名
+ #    index=$?
+	# file_type=${file:$index:${#file}}
 
 
-	file=$old_file
-	unset index
+	# file=$old_file
+	# unset index
 }
 
 #-------------------------------------------------
@@ -61,22 +62,23 @@ get_file_type(){
 #   
 #-------------------------------------------------
 get_file_name(){
-    file=$1
-	#获取文件名结束的位置
-	get_last_char_index $file "\."
-    #获取到后缀名
-    end=$?
+    file_name=${1##*/}
+ #    file=$1
+	# #获取文件名结束的位置
+	# get_last_char_index $file "\."
+ #    #获取到后缀名
+ #    end=$?
     
-    #判断是否是目录
-    if [[ $end == ${#file} ]]; then
-        file_name=$file
-        else
-        # echo "file="$file
-        # echo "size="${#file}
-        # echo "start="$start
-        # echo "end="$end
-         file_name=${file:0:(( $end -1 ))}
-    fi
+ #    #判断是否是目录
+ #    if [[ $end == ${#file} ]]; then
+ #        file_name=$file
+ #        else
+ #        # echo "file="$file
+ #        # echo "size="${#file}
+ #        # echo "start="$start
+ #        # echo "end="$end
+ #         file_name=${file:0:(( $end -1 ))}
+    # fi
 	
 }
 
@@ -191,13 +193,15 @@ is_dir(){
 #
 #返回值：file_path  file_name
 #-------------------------------------------------
-slip_path(){
-    p=$1
-    get_last_char_index $p "\/"
-    i=$?
-    file_path=${p:0:(( $i - 1 ))}
-    file_name=${p:$i:${#p}}
-}
+# slip_path(){
+#     # p=$1
+#     # get_last_char_index $p "\/"
+#     # i=$?
+#     # file_path=${p:0:(( $i - 1 ))}
+#     # file_name=${p:$i:${#p}}
+#     # file_path=${file_path%/*}
+#     # file_name=${file_path##*/}
+# }
 #-------------------------------------------------
 #函数名称： 文件转码
 #   
@@ -211,8 +215,13 @@ transing(){
     start_time=$3
     trans_args=$4
     time=$5
-    # print_args "$@"
-    # exit
+    
+     # print_y "old_path=$old_path"
+     # print_y "new_path=$new_path"
+     # print_y "start_time=$start_time"
+     # print_y "trans_args=$trans_args"
+     # print_y "time=$time"
+     # return
     print_y "开始转码：$old_path "
     
     #判断是否要剪辑影片
@@ -228,8 +237,9 @@ transing(){
         fi 
     fi
     print_y "转码命令：" $cmd
+    echo $path
     #执行转码
-    `$cmd`
+    ` $cmd `
     if [[ $? == 0 ]]; then
             print_g "转码成功：$new_path"
         else

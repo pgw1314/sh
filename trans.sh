@@ -8,6 +8,8 @@
 #最后修改时间：2018年8月22日
 #
 #############################################################
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 
 #引入脚本
 #打印模块
@@ -123,16 +125,16 @@ helper(){
 #功能：初始化要转换的视频格式列表和完成目录
 #-------------------------------------------------
 init_args(){
-    path=$1
+    my_path=$1
     #初始化要转换的视频格式列表
     f_types=($in_f_types)
     #判断路径是否带/
-    check_path_last_char $path
+    check_path_last_char $my_path
     #初始化完成目录
     # if [[ -n $in_to_path ]]; then
     #     to_path=$in_to_path
     # else
-    #     to_path=$path"-"$to_type
+    #     to_path=$my_path"-"$to_type
     # fi
     # `mkdir -p $to_path`
     
@@ -187,8 +189,7 @@ get_new_file_path(){
 #功能：做转换前的准备工作
 #-------------------------------------------------
 pre_trans(){
-    # print_args "$@"
-    # exit
+
     file_path=$1
     file_name=$2
     is_file=$3
@@ -204,12 +205,12 @@ pre_trans(){
             # 获取新的文件路径
             get_new_file_path $is_file
 
-            # print_r "to_path=$to_path"
-            # print_r "file_path=$file_path"
-            # print_r "old_path=$old_path"
-            # print_r "file_name=$file_name"
-            # print_r "new_file_path=$new_file_path"
-            # exit
+            # print_y "to_path=$to_path"
+            # print_y "file_path=$file_path"
+            # print_y "old_path=$old_path"
+            # print_y "file_name=$file_name"
+            # print_y "new_file_path=$new_file_path"
+            # return
         
             #开始转码
             transing "$old_path" "$new_file_path" "$start_time" "$trans_args" "$time"
@@ -226,13 +227,13 @@ pre_trans(){
 #功能：如果是文件夹的话读取文件列表
 #-------------------------------------------------
 read_dir(){
-    path=$1
-    ls $path | while read file; do
-        if [ -d $path"/"$file ]  
+    my_path=$1
+    ls $my_path | while read file; do
+        if [ -d $my_path"/"$file ]  
         then
-            read_dir $path"/"$file
+            read_dir $my_path"/"$file
         else
-            pre_trans "$path" "$file"
+            pre_trans "$my_path" "$file"
         fi
     done
 
@@ -243,20 +244,24 @@ read_dir(){
  if [[ -z $1 || $1 == "-h" ]]; then
      helper
  fi
+
  #获取视频的参数
  read_args $1
  #预览
  preview 
  #遍历传入的所有文件名
- for path in $@ ; do
+ for my_path in $@ ; do
     #初始化参数
-    init_args $path 
+    init_args $my_path 
     #判断是否是文件夹
-    if [[ -d $path ]]; then
+    if [[ -d $my_path ]]; then
             #遍历文件夹内容
-            read_dir $path
+            read_dir $my_path
         else
-            slip_path $path
+            # 分解路径和文件名
+            file_path=${my_path%/*}
+            file_name=${my_path##*/}
+            file_name=${file_name%.*}
             pre_trans "$file_path" "$file_name" "y"
 
     fi

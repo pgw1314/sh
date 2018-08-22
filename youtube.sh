@@ -8,7 +8,8 @@
 #最后修改时间：2018年8月22日
 #
 #############################################################
-
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 #引入脚本
 #打印模块
 . ./funs/m_print.sh

@@ -2,6 +2,7 @@
 #############################################################
 # 该脚本是用来安装所有脚本的
 #############################################################
+
 #引入脚本
 . ./funs/m_print.sh
 . ./funs/m_utils.sh
@@ -44,9 +45,9 @@ replase_file_content(){
 #功能：如果是文件夹的话读取文件列表
 #-------------------------------------------------
 read_dir(){
-    path=$1
-    ls $path | while read file; do
-    	file_path=$path"/"$file
+    my_path=$1
+    ls $my_path | while read file; do
+    	file_path=$my_path"/"$file
 
     	#print_y "开始复制："$file_path
     	temp_file=$temp_path"/"$file
@@ -69,19 +70,29 @@ read_dir(){
     			if [[ $2 == "env"  ]]; then
     				print_y "开始配置环境变量：$file_path"
     				old_file_path=$file_path
+                    # echo $file_path
+    				# slip_path $file_path
+                    #file_path=${file_path%/*}
+                    #echo $file_path
+                    #获取到文件名和路径
+                    #file_path=${file_path%/*}
+                    file_name=${old_file_path##*/}
+                    file_name=${file_name%.*}
+                # echo $file_name
+    				rm -rf $bin_path"/"$file_name
 
-    				slip_path $file_path
-    				get_file_name $file_name
-    				
-    				sudo rm -rf $bin_path"/"$file_name
     				ln -s $old_file_path $bin_path"/"$file_name
-    				print_g "环境变量配置完成：$file_path"
+                    if [[ $? == 0 ]]; then
+                        print_g "环境变量配置完成：$file_path"
+                        else
+                        
+                        return 127
+                    fi
+    				
     			fi
-    			#print_g "配置完成："$file_path
     		fi
         	
     	fi
-    	#print_g "复制完成:"$temp_file
       
     done
 
@@ -117,6 +128,10 @@ else
 fi
 print_y "开始配置环境变量..."
 read_dir $shell_path env
+if [[ $? != 0 ]]; then
+    print_r "错误：环境变量配置失败！！"
+    exit
+fi
 rm -rf $temp_path
 print_g "脚本安装完成！！"
 
