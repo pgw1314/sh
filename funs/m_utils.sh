@@ -3,7 +3,7 @@
 #
 #功能： 该脚本为函数库！放置常用的函数
 #
-#版本：v1.0.1
+#版本：v1.0.2
 #
 #最后修改时间：2018年8月22日
 #
@@ -167,52 +167,7 @@ is_dir(){
 #     # file_path=${file_path%/*}
 #     # file_name=${file_path##*/}
 # }
-#-------------------------------------------------
-#函数名称： 文件转码
-#   
-#参数： 源文件路径 新的文件路径 截取开始时间 转码参数 截取结束时间
-#
-#功能：文件转码
-#-------------------------------------------------
-transing(){
-    old_path=$1
-    new_path=$2
-    start_time=$3
-    trans_args=$4
-    time=$5
-    
-     # print_y "old_path=$old_path"
-     # print_y "new_path=$new_path"
-     # print_y "start_time=$start_time"
-     # print_y "trans_args=$trans_args"
-     # print_y "time=$time"
-     # return
-    print_y "开始转码：$old_path "
-    
-    #判断是否要剪辑影片
-    #构建命令
-    if [[ -z $start_time ]]; then
-        cmd="ffmpeg -y -i $old_path $trans_args $new_path"
-     else
-     #判断结束时间
-        if [[ -z $time ]]; then
-            cmd="ffmpeg -y -ss $start_time -i $old_path $trans_args $new_path"
-        else
-            cmd="ffmpeg -y -ss $start_time -t $time  -i $old_path $trans_args $new_path"
-        fi 
-    fi
-    print_y "转码命令：" $cmd
-    echo $path
-    #执行转码
-    ` $cmd `
-    if [[ $? == 0 ]]; then
-            print_g "转码成功：$new_path"
-        else
-            print_r "转码失败：$old_path"
-            exit
-    fi
 
-}
 #-------------------------------------------------
 #函数名称： 替换文件中的内容
 #
