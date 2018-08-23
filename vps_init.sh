@@ -27,7 +27,7 @@ github_path=https://raw.githubusercontent.com/pgw1314/sh/master/install.sh
 #下载安装脚本
 print_y "$Info 开始下载安装脚本..."
 yum -y install wget
-if [[ condition ]]; then
+if [[ $? != 0 ]]; then
     print_r "$Error wget安装失败！"
     exit
 fi
