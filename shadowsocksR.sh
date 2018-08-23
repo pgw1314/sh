@@ -443,12 +443,12 @@ install(){
         echo
         print_g "ShadowsocksR服务器端安装成功！"
         echo "------------------------配置信息-----------------------------------------"
-        print_g "服务器IP      :  $(get_ip) "
-        print_g "服务器端口     :  ${shadowsocksport} "
-        print_g "密码          :  ${shadowsockspwd} "
-        print_g "加密方式       :  ${shadowsockscipher} "
-        print_g "协议          :  ${shadowsockprotocol} "
-        print_g "混淆          :  ${shadowsockobfs} "
+        print_r "服务器IP      :  $(get_ip) "
+        print_r "服务器端口    :  ${shadowsocksport} "
+        print_r "密码          :  ${shadowsockspwd} "
+        print_r "加密方式      :  ${shadowsockscipher} "
+        print_r "协议          :  ${shadowsockprotocol} "
+        print_r "混淆          :  ${shadowsockobfs} "
         echo "-------------------------------------------------------------------------"
     else
         print_r "抱歉ShadowsocksR服务端安装失败！！ "
