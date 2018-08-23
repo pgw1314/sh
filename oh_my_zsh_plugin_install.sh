@@ -17,7 +17,11 @@
 autojump_plugin_install(){
     autojump_path=/tmp/autojump
     git clone git://github.com/joelthelion/autojump.git $autojump_path
-    $autojump_path/install.py
+    if [[ $? != 0 ]]; then
+        print_r "下载错误：autojump下载失败!"
+        exit
+    fi
+    python /tmp/autojump/install.py
     if [[ $? != 0 ]]; then
         print_r "错误：autojump插件安装失败!"
         exit
