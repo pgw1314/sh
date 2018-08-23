@@ -93,7 +93,7 @@ installing(){
 	cd youtube-upload-master
 	sudo python setup.py install
 	if [[ $? == 0 ]]; then
-		print_r "youtube-upload 安装成功！！请尽情的上传吧"
+		print_g "youtube-upload 安装成功！！请尽情的上传吧"
 	fi
 }
 
