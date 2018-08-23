@@ -13,33 +13,55 @@
 #引入脚本
 . ./funs/m_print.sh
 . ./funs/m_utils.sh
-
+#-------------------------------------------------
+#函数名称： 安装autojump插件
+#   
+#功能：给oh-my-zsh安装autojump插件
+#   
+#-------------------------------------------------
 autojump_plugin_install(){
     autojump_path=/tmp/autojump
+    rm -rf $autojump_path
     git clone git://github.com/joelthelion/autojump.git $autojump_path
     if [[ $? != 0 ]]; then
         print_r "下载错误：autojump下载失败!"
         exit
     fi
-    python /tmp/autojump/install.py
+    cd $autojump_path
+    ./install.py
     if [[ $? != 0 ]]; then
         print_r "错误：autojump插件安装失败!"
         exit
     fi
+    cd -
     rm -rf $autojump_path
 }
 
-
+#-------------------------------------------------
+#函数名称： 安装syntax_highlighting插件
+#   
+#功能：给oh-my-zsh安装syntax_highlighting插件
+#   
+#-------------------------------------------------
 syntax_highlighting_plugin_install(){
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    syntax_highlighting_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    rm -rf $syntax_highlighting_path
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $syntax_highlighting_path
     if [[ $? != 0 ]]; then
         print_r "错误：syntax-highlighting插件安装失败!"
         exit
     fi
 }
-
+#-------------------------------------------------
+#函数名称： 安装autosuggestions插件
+#   
+#功能：给oh-my-zsh安装autosuggestions插件
+#   
+#-------------------------------------------------
 autosuggestions_plugin_install(){
-    git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    autosuggestions_path=$ZSH_CUSTOM/plugins/zsh-autosuggestions
+    rm -rf $autosuggestions_path
+    git clone git://github.com/zsh-users/zsh-autosuggestions $autosuggestions_path
     if [[ $? != 0 ]]; then
         print_r "错误：autosuggestions插件安装失败!"
         exit
