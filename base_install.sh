@@ -77,7 +77,7 @@ install(){
     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
     if [[ $? == 0 ]]; then
         sudo chmod a+rx /usr/local/bin/youtube-dl
-        $i_youtube_dl=y
+        i_youtube_dl=y
     fi
 
     
