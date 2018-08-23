@@ -9,9 +9,18 @@
 #
 #############################################################
 
-#引入脚本
-. ./funs/m_print.sh
-. ./funs/m_utils.sh
+print_r(){
+    echo -e "\033[31m $@ \033[0m"
+}
+print_g(){
+    echo -e "\033[32m $@ \033[0m"
+}
+print_b(){
+    echo -e "\033[34m $@ \033[0m"
+}
+print_y(){
+    echo -e "\033[33m $@ \033[0m"
+}
 
 
 shell_path=/usr/local/shell
@@ -60,11 +69,15 @@ read_dir(){
     	if [[ -d $file_path ]]; then
     		cp -r $file_path $temp_file
     	else
-    		get_file_type $file_path
+    		file_type=${file_path##*.}
     		if [[ $file_type == "sh" ]]; then
     			#print_y "开始配置："$file_path
     			#替换文件路径
     			if [[ $2 == "rep"  ]]; then
+                    # echo "-------------------------------------"
+                    # print_g "file_path=$file_path"
+                    # print_g "temp_file=$temp_file"
+                    # echo "-------------------------------------"
                     #复制脚本
                     cp $file_path $temp_file
                     #替换函数库路径
@@ -78,10 +91,6 @@ read_dir(){
     			if [[ $2 == "env"  ]]; then
     				print_y "开始配置环境变量：$file_path"
     				old_file_path=$file_path
-                    # echo $file_path
-    				# slip_path $file_path
-                    #file_path=${file_path%/*}
-                    #echo $file_path
                     #获取到文件名和路径
                     #file_path=${file_path%/*}
                     file_name=${old_file_path##*/}
