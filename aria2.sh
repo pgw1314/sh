@@ -659,3 +659,15 @@ case "$num" in
 	;;
 esac
 fi
+# 重新替换配置文件
+mv $aria2_conf $aria2_conf.bak
+wget -O $aria2_conf https://raw.githubusercontent.com/pgw1314/sh/master/conf/aria2.conf
+
+# 重新启动
+Restart_aria2
+
+
+
+
+
+
