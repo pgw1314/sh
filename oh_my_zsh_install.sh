@@ -15,7 +15,12 @@
 . ./funs/m_utils.sh
 
 
-
+#-------------------------------------------------
+#函数名称： Mac系统安装oh-my-zsh
+#   
+#功能：给Mac系统安装oh-my-zsh
+#   
+#-------------------------------------------------
 mac_install(){
     #检查是否安装brew
     sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -25,7 +30,12 @@ mac_install(){
     fi
 
 }
-
+#-------------------------------------------------
+#函数名称： Linux系统安装oh-my-zsh
+#   
+#功能：给Linux系统安装oh-my-zsh
+#   
+#-------------------------------------------------
 linux_install(){
     yum -y install zsh
    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
