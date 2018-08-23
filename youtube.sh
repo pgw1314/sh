@@ -68,7 +68,7 @@ upload_file(){
     fi
     upload_file_path=$1
     upload_file_title=$2
-    print_y "开始上传：$upload_file_path"
+    # print_y "开始上传：$upload_file_path"
     upload_file_cmd="youtube-upload -t '$upload_file_title' -d '$desc' --tags '$tags' --playlist  '$play_list' '$upload_file_path' "
     # echo "--------------------upload----------------------------------"
     # print_y "上传文件路径："$upload_file_path
@@ -77,14 +77,14 @@ upload_file(){
     # echo "------------------------------------------------------"
     # return
     #执行上传命令
-    $($upload_file_cmd)
-    if [[ $? == 0 ]]; then
-        #statements
-        print_g "上传成功：$upload_file_path"
-        else
-        print_r "上传失败：$upload_file_path"
-        exit
-    fi
+    echo "\$($upload_file_cmd)" >> $youtube_cmd
+    # if [[ $? == 0 ]]; then
+    #     #statements
+    #     print_g "上传成功：$upload_file_path"
+    #     else
+    #     print_r "上传失败：$upload_file_path"
+    #     exit
+    # fi
     # print_g "上传成功：$upload_path"
 }
 #-------------------------------------------------
@@ -170,6 +170,11 @@ read_arg
 
 #去除文件空格
 ./rename.sh $old_path " " "_" y n n y
+
+# 准备命令文件
+youtube_cmd=/tmp/youtube_cmd.sh
+echo "#!/bin/bash" > $youtube_cmd
+print_y "开始准备上传命令...."
 # echo "--------------------参数列表----------------------------------"
 # print_y "old_path="$old_path
 # print_y "pre_title="$pre_title
@@ -188,5 +193,14 @@ if [[ -d $old_path ]]; then
         pre_upload $slip_path $slip_name
 
 fi
+print_g "上传命令如下：执行请按Enter，取消请按Ctrl+C"
+cat $youtube_cmd
+read aa
+#开始执行命令
+print_y "开始上传....."
+$(bash $youtube_cmd)
+# echo "执行结果：$?"
+rm -rf $youtube_cmd
+print_y "上传完成....."
 
 
