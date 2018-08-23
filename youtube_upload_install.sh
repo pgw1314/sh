@@ -32,7 +32,7 @@ install_env(){
 		sudo yum -y install epel-release
 		sudo yum -y install python-pip
 		if [[ $? != 0 ]]; then
-			sudo rm -rf epel_path
+			sudo mv $sys_epel_path $sys_epel_path.bak
 			sudo cp $loc_epel_path $sys_epel_path
 			sudo yum -y install python-pip
 			if [[ $? != 0 ]]; then
