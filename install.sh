@@ -26,6 +26,12 @@ print_y(){
 shell_path=/usr/local/shell
 bin_path=/usr/local/bin
 temp_path=/tmp/shell
+
+install_sh=(
+    rename.sh
+    trans.sh
+    youtube.sh
+    )
 #-------------------------------------------------
 #函数名称： 替换文件中的内容
 #
@@ -69,6 +75,19 @@ read_dir(){
     	if [[ -d $file_path ]]; then
     		cp -r $file_path $temp_file
     	else
+            #判断该脚本是否安装
+            is_install=''
+            for i_sh in ${install_sh[@]}; do
+                # echo $i_sh
+                if [[ $i_sh == $file ]]; then
+                    is_install=y
+                fi
+            done
+            # echo $file"  is_install=$is_install"
+            #如果文件不在install_sh中则跳过
+            if [[ -z $is_install ]]; then
+                continue
+            fi
     		file_type=${file_path##*.}
     		if [[ $file_type == "sh" ]]; then
     			#print_y "开始配置："$file_path
@@ -77,14 +96,15 @@ read_dir(){
                     # echo "-------------------------------------"
                     # print_g "file_path=$file_path"
                     # print_g "temp_file=$temp_file"
+                    # print_g "file=$file"
                     # echo "-------------------------------------"
                     #复制脚本
                     cp $file_path $temp_file
                     #替换函数库路径
     				replase_file_content $temp_file ".\/funs" "\/usr\/local\/shell\/funs"  
-                    #替换配置文件路径
+        #             #替换配置文件路径
                     replase_file_content $temp_file ".\/conf" "\/usr\/local\/shell\/conf"  
-                    #替换配置文件路径
+        #             #替换配置文件路径
                     replase_file_content $temp_file ".\/rename.sh" "\/usr\/local\/shell\/rename.sh" 
     			fi
     			#配置环境变量
@@ -146,18 +166,28 @@ fi
 print_y "开始修复脚本中的引用路径..."
 read_dir $sh_path rep
 print_g "引用路径修复成功！"
+
 print_y "开始复制脚本文件..."
 
 sudo rm -rf $shell_path
-sudo cp -r $temp_path /usr/local/
-
-sudo chmod -R 755 $shell_path
-if [[ $? == 0 ]]; then
-	print_g "脚本文件复制完成！！"
-else
-	print_r "安装错误：安装失败！！"
+if [[ $? != 0 ]]; then
+    print_r "获取Root权限失败！！"
     exit
 fi
+sudo cp -r $temp_path /usr/local/
+if [[ $? == 0 ]]; then
+    print_g "脚本文件复制完成！！"
+else
+    print_r "安装错误：安装失败！！"
+    exit
+fi
+
+sudo chmod -R 755 $shell_path
+if [[ $? != 0 ]]; then
+    print_r "获取Root权限失败！！"
+    exit
+fi
+
 print_y "开始配置环境变量..."
 read_dir $shell_path env
 if [[ $? != 0 ]]; then
