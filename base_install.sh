@@ -22,6 +22,7 @@ i_unzip=''
 i_gcc=''
 i_gdb=''
 i_gjj=''
+i_vim=''
 
 #-------------------------------------------------
 #函数名称： 安装软件
@@ -67,7 +68,10 @@ install(){
         i_gjj=y
     fi
 
-
+    yum -y install vim 
+    if [[ $? == 0 ]]; then
+        i_vim=y
+    fi
   
     
 }
@@ -120,6 +124,12 @@ preview(){
         print_g "c++    :安装成功"
     else
         print_r "c++    :安装失败"
+    fi
+
+    if [[ -n $i_vim ]]; then
+        print_g "vim    :安装成功"
+    else
+        print_r "vim    :安装失败"
     fi
     echo "---------------------------------------------------------------"
 }
