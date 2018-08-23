@@ -94,6 +94,7 @@ installing(){
 	sudo python setup.py install
 	if [[ $? == 0 ]]; then
 		print_g "youtube-upload 安装成功！！请尽情的上传吧"
+		rm -rf $zip_path
 	fi
 }
 
