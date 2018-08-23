@@ -94,8 +94,9 @@ print_g "autosuggestions插件安装完成！"
 
 #--------------------------配置-------------------------------------------
 print_y "开始安装配置oh-my-zsh..."
-$(cat ./conf/zshrc  > ~/.zshrc )
-source ~/.zshrc
+mv ~/.zshrc ~/.zshrc.bak
+$(cat ./conf/zshrc > ~/.zshrc )
+#source ~/.zshrc
 print_g "oh-my-zsh配置完成！"
 
 
