@@ -8,17 +8,19 @@ export PATH
 #   Thanks: @breakwa11 <https://twitter.com/breakwa11>            #
 #   Intro:  https://shadowsocks.be/9.html                         #
 #=================================================================#
+#引入脚本
+#打印模块
+. ./funs/m_print.sh
 
+# echo
+# echo "#############################################################"
+# echo "# One click Install ShadowsocksR Server                     #"
+# echo "# Intro: https://shadowsocks.be/9.html                      #"
+# echo "# Author: Teddysun <i@teddysun.com>                         #"
+# echo "# Github: https://github.com/shadowsocksr/shadowsocksr      #"
+# echo "#############################################################"
+# echo
 clear
-echo
-echo "#############################################################"
-echo "# One click Install ShadowsocksR Server                     #"
-echo "# Intro: https://shadowsocks.be/9.html                      #"
-echo "# Author: Teddysun <i@teddysun.com>                         #"
-echo "# Github: https://github.com/shadowsocksr/shadowsocksr      #"
-echo "#############################################################"
-echo
-
 libsodium_file="libsodium-1.0.16"
 libsodium_url="https://github.com/jedisct1/libsodium/releases/download/1.0.16/libsodium-1.0.16.tar.gz"
 shadowsocks_r_file="shadowsocksr-3.2.2"
@@ -440,15 +442,14 @@ install(){
         clear
         echo
         print_g "ShadowsocksR服务器端安装成功！"
-        echo"------------------------配置信息-----------------------------------------"
+        echo "------------------------配置信息-----------------------------------------"
         print_g "服务器IP      :  $(get_ip) "
         print_g "服务器端口     :  ${shadowsocksport} "
         print_g "密码          :  ${shadowsockspwd} "
         print_g "加密方式       :  ${shadowsockscipher} "
         print_g "协议          :  ${shadowsockprotocol} "
         print_g "混淆          :  ${shadowsockobfs} "
-        
-        echo"-------------------------------------------------------------------------"
+        echo "-------------------------------------------------------------------------"
     else
         print_r "抱歉ShadowsocksR服务端安装失败！！ "
         install_cleanup
