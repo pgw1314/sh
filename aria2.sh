@@ -127,7 +127,7 @@ Download_aria2(){
 }
 Download_aria2_conf(){
 	mkdir "${file}" && cd "${file}"
-	wget --no-check-certificate -N "https://raw.githubusercontent.com/pgw1314/sh/master/conf/aria2.conf"
+	wget --no-check-certificate -N "https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/other/Aria2/aria2.conf"
 	[[ ! -s "aria2.conf" ]] && echo -e "${Error} Aria2 配置文件下载失败 !" && rm -rf "${file}" && exit 1
 	wget --no-check-certificate -N "https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/other/Aria2/dht.dat"
 	[[ ! -s "dht.dat" ]] && echo -e "${Error} Aria2 DHT文件下载失败 !" && rm -rf "${file}" && exit 1
@@ -213,9 +213,9 @@ Set_aria2(){
  ${Green_font_prefix}5.${Font_color_suffix}  手动 打开配置文件修改" && echo
 	stty erase '^H' && read -p "(默认: 取消):" aria2_modify
 	[[ -z "${aria2_modify}" ]] && echo "已取消..." && exit 1
-	# if [[ ${aria2_modify} == "1" ]]; then
-		# Set_aria2_RPC_passwd
-	if [[ ${aria2_modify} == "2" ]]; then
+	if [[ ${aria2_modify} == "1" ]]; then
+		Set_aria2_RPC_passwd
+	elif [[ ${aria2_modify} == "2" ]]; then
 		Set_aria2_RPC_port
 	elif [[ ${aria2_modify} == "3" ]]; then
 		Set_aria2_RPC_dir
@@ -361,7 +361,7 @@ Set_aria2_RPC_dir(){
 }
 Set_aria2_RPC_passwd_port_dir(){
 	Read_config
-	# Set_aria2_RPC_passwd "1"
+	Set_aria2_RPC_passwd "1"
 	Set_aria2_RPC_port "1"
 	Set_aria2_RPC_dir "1"
 	Restart_aria2
@@ -589,38 +589,36 @@ action=$1
 if [[ "${action}" == "update-bt-tracker" ]]; then
 	Update_bt_tracker_cron
 else
-# echo && echo -e " Aria2 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-#   -- Toyo | doub.io/shell-jc4 --
+echo && echo -e " Aria2 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+  -- Toyo | doub.io/shell-jc4 --
   
-#  ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
-# ————————————
-#  ${Green_font_prefix} 1.${Font_color_suffix} 安装 Aria2
-#  ${Green_font_prefix} 2.${Font_color_suffix} 更新 Aria2
-#  ${Green_font_prefix} 3.${Font_color_suffix} 卸载 Aria2
-# ————————————
-#  ${Green_font_prefix} 4.${Font_color_suffix} 启动 Aria2
-#  ${Green_font_prefix} 5.${Font_color_suffix} 停止 Aria2
-#  ${Green_font_prefix} 6.${Font_color_suffix} 重启 Aria2
-# ————————————
-#  ${Green_font_prefix} 7.${Font_color_suffix} 修改 配置文件
-#  ${Green_font_prefix} 8.${Font_color_suffix} 查看 配置信息
-#  ${Green_font_prefix} 9.${Font_color_suffix} 查看 日志信息
-#  ${Green_font_prefix}10.${Font_color_suffix} 配置 自动更新 BT-Tracker服务器
-# ————————————" && echo
-# if [[ -e ${aria2c} ]]; then
-# 	check_pid
-# 	if [[ ! -z "${PID}" ]]; then
-# 		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 并 ${Green_font_prefix}已启动${Font_color_suffix}"
-# 	else
-# 		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 但 ${Red_font_prefix}未启动${Font_color_suffix}"
-# 	fi
-# else
-# 	echo -e " 当前状态: ${Red_font_prefix}未安装${Font_color_suffix}"
-# fi
-# echo
-
-# stty erase '^H' && read -p " 请输入数字 [0-10]:" num
-num=1
+ ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
+————————————
+ ${Green_font_prefix} 1.${Font_color_suffix} 安装 Aria2
+ ${Green_font_prefix} 2.${Font_color_suffix} 更新 Aria2
+ ${Green_font_prefix} 3.${Font_color_suffix} 卸载 Aria2
+————————————
+ ${Green_font_prefix} 4.${Font_color_suffix} 启动 Aria2
+ ${Green_font_prefix} 5.${Font_color_suffix} 停止 Aria2
+ ${Green_font_prefix} 6.${Font_color_suffix} 重启 Aria2
+————————————
+ ${Green_font_prefix} 7.${Font_color_suffix} 修改 配置文件
+ ${Green_font_prefix} 8.${Font_color_suffix} 查看 配置信息
+ ${Green_font_prefix} 9.${Font_color_suffix} 查看 日志信息
+ ${Green_font_prefix}10.${Font_color_suffix} 配置 自动更新 BT-Tracker服务器
+————————————" && echo
+if [[ -e ${aria2c} ]]; then
+	check_pid
+	if [[ ! -z "${PID}" ]]; then
+		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 并 ${Green_font_prefix}已启动${Font_color_suffix}"
+	else
+		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 但 ${Red_font_prefix}未启动${Font_color_suffix}"
+	fi
+else
+	echo -e " 当前状态: ${Red_font_prefix}未安装${Font_color_suffix}"
+fi
+echo
+stty erase '^H' && read -p " 请输入数字 [0-10]:" num
 case "$num" in
 	0)
 	Update_Shell
