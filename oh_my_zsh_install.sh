@@ -34,6 +34,14 @@ syntax_highlighting_plugin_install(){
     fi
 }
 
+autosuggestions_plugin_install(){
+    git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+    if [[ $? != 0 ]]; then
+        print_r "错误：autosuggestions插件安装失败!"
+        exit
+    fi
+}
+
 
 
 mac_install(){
@@ -80,8 +88,12 @@ autojump_plugin_install
 print_g "autojump插件安装完成！"
 
 print_y "开始安装syntax-highlighting插件...."
-autojump_plugin_install
+syntax_highlighting_plugin_install
 print_g "syntax-highlighting插件安装完成！"
+
+print_y "开始安装autosuggestions插件...."
+autosuggestions_plugin_install
+print_g "autosuggestions插件安装完成！"
 
 #--------------------------配置-------------------------------------------
 print_y "开始安装配置oh-my-zsh..."
