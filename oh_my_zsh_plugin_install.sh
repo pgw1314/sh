@@ -11,8 +11,8 @@
 
 
 #引入脚本
-. ./funs/m_print.sh
-. ./funs/m_utils.sh
+. ~/sh/funs/m_print.sh
+. ~/sh/funs/m_utils.sh
 #-------------------------------------------------
 #函数名称： 安装autojump插件
 #   

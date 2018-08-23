@@ -11,9 +11,9 @@
 
 #引入脚本
 #打印模块
-. ./funs/m_print.sh
+. ~/sh/funs/m_print.sh
 #常用函数模块
-. ./funs/m_utils.sh
+. ~/sh/funs/m_utils.sh
 
 loc_epel_path=./conf/epel.repo
 sys_epel_path=/etc/yum.repos.d/epel.repo
