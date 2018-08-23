@@ -91,7 +91,7 @@ read_dir(){
 
     				ln -s $old_file_path $bin_path"/"$file_name
                     if [[ $? == 0 ]]; then
-                        print_g "环境变量配置完成：$file_path"
+                        print_g "环境变量配置完成：$bin_path/$file_name"
                         else
                         
                         return 127
@@ -106,7 +106,22 @@ read_dir(){
 
 }
 
-
+#-----------------------------主程序开始------------------------------------------
+#从GitHub上获取程序
+sh_path=~/sh
+github_path="https://github.com/pgw1314/sh.git"
+if [[ ! -d $sh_path ]]; then
+    yum -y install git
+    if [[ $? != 0 ]]; then
+        print_r "错误：安装git失败"
+        exit
+    fi
+    git clone $github_path  $sh_path
+    if [[ $? != 0 ]]; then
+        print_r "错误：从GitHub拉取脚本失败！"
+        exit
+    fi
+fi
 
 # done
 #将所有代码拷贝到/usr/local/shell
@@ -118,11 +133,9 @@ if [[ $? != 0 ]]; then
 	print_r "临时文件夹：$temp_path创建错误！"
     exit
 fi
-#cp -r ./ $temp_path
-#print_g "将所有脚本复制到：$temp_path"
 #替换引用文件路径
 print_y "开始修复脚本中的引用路径..."
-read_dir . rep
+read_dir $sh_path rep
 print_g "引用路径修复成功！"
 print_y "开始复制脚本文件..."
 
