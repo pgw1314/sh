@@ -265,8 +265,7 @@ read_dir(){
  #准备命令文件
  g_cmd_file=/tmp/trans_cmd.sh
  rm -rf $g_cmd_file
- echo "#!/bin/bash" >> $g_cmd_file
- echo "" >> $g_cmd_file
+ echo "#!/bin/bash" > $g_cmd_file
 
  #遍历传入的所有文件名
  for g_path in $@ ; do
@@ -297,11 +296,12 @@ read_dir(){
 
     fi
  done
- print_g "转码命令准备就绪！"
+ print_g "转码命令如下：执行请按Enter，取消请按Ctrl+C"
+ cat $g_cmd_file
+ read aa
  print_y "开始转码，请耐心等待！"
  #执行命令文件
  $(bash $g_cmd_file)
- rm -rf $g_cmd_file
  print_g "转码完成，再见！！！"
 
 
