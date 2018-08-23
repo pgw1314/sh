@@ -15,7 +15,7 @@
 #常用函数模块
 . ~/sh/funs/m_utils.sh
 
-loc_epel_path=./conf/epel.repo
+loc_epel_path=~/sh/conf/epel.repo
 sys_epel_path=/etc/yum.repos.d/epel.repo
 tmp_path=/tmp/youtube_upload
 #-------------------------------------------------
@@ -32,7 +32,11 @@ install_env(){
 		sudo yum -y install epel-release
 		sudo yum -y install python-pip
 		if [[ $? != 0 ]]; then
+			# 将自己的epel.repo复制到系统中
 			sudo mv $sys_epel_path $sys_epel_path.bak
+			sudo mv $loc_epel_path $sys_epel_path
+
+
 			sudo cp $loc_epel_path $sys_epel_path
 			sudo yum -y install python-pip
 			if [[ $? != 0 ]]; then
