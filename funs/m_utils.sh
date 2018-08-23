@@ -196,3 +196,26 @@ replase_file_content(){
 
     fi
 }
+
+
+
+#-------------------------------------------------
+#函数名称： 获取操作系统类型
+#
+#   
+#返回值：Mac=1  Linux=2 Other=3 
+#-------------------------------------------------
+get_os_type(){
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        # Mac OS X 操作系统
+        #echo "Mac OS 操作系统"
+         os_type=1
+    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+        #echo "Linux 操作系统"
+        os_type=2
+    else
+        os_type=3
+    fi
+
+}
