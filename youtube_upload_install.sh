@@ -82,6 +82,7 @@ install_ext(){
 #功能：安装youtube-upload主程序
 #-------------------------------------------------
 installing(){
+	rm -rf $tmp_path
 	sudo mkdir -p $tmp_path
 	if [[ $? != 0 ]]; then
 		print_r "错误：临时文件创建失败!"
@@ -94,12 +95,16 @@ installing(){
 		print_r "错误：压缩文件解压失败"
 		exit
 	fi
-	cd youtube-upload-master
+	cd $tmp_path/youtube-upload-master
 	sudo python setup.py install
-	if [[ $? == 0 ]]; then
-		print_g "youtube-upload 安装成功！！请尽情的上传吧"
-		rm -rf $zip_path
+	if [[ $? != 0 ]]; then
+		print_r "[错误]：youtube-upload 安装失败！"
+		exit
 	fi
+	print_g "youtube-upload 安装成功！！请尽情的上传吧"
+	cd -
+	rm -rf $zip_path
+	
 }
 
 #安装环境
