@@ -13,7 +13,11 @@
 #引入脚本
 . ./funs/m_print.sh
 . ./funs/m_utils.sh
-
+#-------------------------------------------------
+#函数名称： Mac系统下安装Opencc
+#   
+#功能：Mac系统下安装Opencc
+#-------------------------------------------------
 mac_install(){
     #检查是否安装brew
     brew install cmake
@@ -24,7 +28,11 @@ mac_install(){
     brew install opencc
 
 }
-
+#-------------------------------------------------
+#函数名称： Linux系统下安装Opencc
+#   
+#功能：Linux系统下安装Opencc
+#-------------------------------------------------
 linux_install(){
     yum -y install cmake
     if [[ $? != 0 ]]; then
@@ -67,6 +75,7 @@ linux_install(){
     
 }
 
+#--------------------------主程序开始-----------------------------------
 #判断是否已经安装了opencc
 opencc --version
 if [[ $? == 0 ]]; then
