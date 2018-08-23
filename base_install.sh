@@ -19,6 +19,9 @@ i_cmake=''
 i_git=''
 i_wget=''
 i_unzip=''
+i_gcc=''
+i_gdb=''
+i_gjj=''
 
 #-------------------------------------------------
 #函数名称： 安装软件
@@ -47,6 +50,21 @@ install(){
     yum -y install unzip
     if [[ $? == 0 ]]; then
         i_unzip=y
+    fi
+
+    yum -y install gcc
+    if [[ $? == 0 ]]; then
+        i_gcc=y
+    fi
+
+    yum -y install gdb
+    if [[ $? == 0 ]]; then
+        i_gdb=y
+    fi
+
+    yum -y install gcc-c++   
+    if [[ $? == 0 ]]; then
+        i_gjj=y
     fi
 
 
@@ -84,6 +102,24 @@ preview(){
         print_g "unzip  :安装成功"
     else
         print_r "unzip  :安装失败"
+    fi
+
+    if [[ -n $i_gcc ]]; then
+        print_g "gcc    :安装成功"
+    else
+        print_r "gcc    :安装失败"
+    fi
+
+    if [[ -n $i_gdb ]]; then
+        print_g "gdb    :安装成功"
+    else
+        print_r "gdb    :安装失败"
+    fi
+
+    if [[ -n $i_gjj ]]; then
+        print_g "c++    :安装成功"
+    else
+        print_r "c++    :安装失败"
     fi
     echo "---------------------------------------------------------------"
 }
