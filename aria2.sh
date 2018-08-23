@@ -213,9 +213,9 @@ Set_aria2(){
  ${Green_font_prefix}5.${Font_color_suffix}  手动 打开配置文件修改" && echo
 	stty erase '^H' && read -p "(默认: 取消):" aria2_modify
 	[[ -z "${aria2_modify}" ]] && echo "已取消..." && exit 1
-	if [[ ${aria2_modify} == "1" ]]; then
+	# if [[ ${aria2_modify} == "1" ]]; then
 		# Set_aria2_RPC_passwd
-	elif [[ ${aria2_modify} == "2" ]]; then
+	if [[ ${aria2_modify} == "2" ]]; then
 		Set_aria2_RPC_port
 	elif [[ ${aria2_modify} == "3" ]]; then
 		Set_aria2_RPC_dir
