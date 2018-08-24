@@ -24,6 +24,7 @@ i_gdb=''
 i_gjj=''
 i_vim=''
 i_youtube_dl=''
+i_screen=''
 
 #-------------------------------------------------
 #函数名称： 安装软件
@@ -72,6 +73,11 @@ install(){
     yum -y install vim 
     if [[ $? == 0 ]]; then
         i_vim=y
+    fi
+
+    yum -y install screen
+    if [[ $? == 0 ]]; then
+        i_screen=y
     fi
 
     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
@@ -139,6 +145,11 @@ preview(){
         print_g "vim    :安装成功"
     else
         print_r "vim    :安装失败"
+    fi
+    if [[ -n $i_screen ]]; then
+        print_g "screen    :安装成功"
+    else
+        print_r "screen    :安装失败"
     fi
 
     if [[ -n $i_youtube_dl ]]; then
