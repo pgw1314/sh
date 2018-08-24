@@ -110,5 +110,10 @@ if [[ $? != 0 ]]; then
 fi
 print_g "$Info oh-my-zsh软件包安装完成"
 
+
+
+
+
+
 # 删除install文件
 rm -rf ./install.sh

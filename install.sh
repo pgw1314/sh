@@ -18,7 +18,7 @@ print_g(){
 print_b(){
     echo -e "\033[34m $@ \033[0m"
 }
-print_r(){
+print_y(){
     echo -e "\033[33m $@ \033[0m"
 }
 
@@ -94,7 +94,7 @@ read_dir(){
     ls $my_path | while read file; do
     	file_path=$my_path"/"$file
 
-    	#print_r $Info  "开始复制："$file_path
+    	#print_y $Info   "开始复制："$file_path
     	temp_file=$temp_path"/"$file
     	if [[ -d $file_path ]]; then
     		cp -r $file_path $temp_file
@@ -114,7 +114,7 @@ read_dir(){
             fi
     		file_type=${file_path##*.}
     		if [[ $file_type == "sh" ]]; then
-    			#print_r $Info  "开始配置："$file_path
+    			#print_y $Info   "开始配置："$file_path
     			#替换文件路径
     			if [[ $2 == "rep"  ]]; then
                     # echo "-------------------------------------"
@@ -133,7 +133,7 @@ read_dir(){
     			fi
     			#配置环境变量
     			if [[ $2 == "env"  ]]; then
-    				print_r $Info  "开始配置环境变量：$file_path"
+    				print_y $Info   "开始配置环境变量：$file_path"
     				old_file_path=$file_path
                     #获取到文件名和路径
                     #file_path=${file_path%/*}
@@ -181,7 +181,7 @@ fi
 
 #将所有代码拷贝到/usr/local/shell
 rm -rf $temp_path
-#print_r $Info  "请输入管理员密码！"
+#print_y $Info   "请输入管理员密码！"
 
 mkdir -p $temp_path
 if [[ $? != 0 ]]; then
@@ -189,11 +189,11 @@ if [[ $? != 0 ]]; then
     exit
 fi
 #替换引用文件路径
-print_r $Info  "开始修复脚本中的引用路径..."
+print_y $Info   "开始修复脚本中的引用路径..."
 read_dir $sh_path rep
 print_g $Info "引用路径修复成功！"
 
-print_r $Info  "开始复制脚本文件..."
+print_y $Info   "开始复制脚本文件..."
 
 sudo rm -rf $shell_path
 if [[ $? != 0 ]]; then
@@ -214,7 +214,7 @@ if [[ $? != 0 ]]; then
     exit
 fi
 
-# print_r $Info  "开始配置环境变量..."
+# print_y $Info   "开始配置环境变量..."
 read_dir $shell_path env
 if [[ $? != 0 ]]; then
     print_r $Error "环境变量配置失败！！"
