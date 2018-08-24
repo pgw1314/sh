@@ -287,17 +287,34 @@ fi
 print_g "$Info shadowsocksR软件包安装完成"
 
 
-#安装oh_my_zsh_install
-print_y "$Info 开始安装oh-my-zsh软件包..."
-$sh_path/oh_my_zsh_install.sh
+
+
+#安装ffmpeg
+print_y "$Info 开始安装ffmpeg软件包..."
+$sh_path/ffmpeg_install.sh
 if [[ $? != 0 ]]; then
-    print_r "$Error oh_my_zsh_install安装中出错了！"
+    print_r "$Error ffmpeg安装中出错了！"
     exit
 fi
-print_g "$Info oh-my-zsh软件包安装完成"
+print_g "$Info ffmpeg软件包安装完成"
 
 #开始安装LNMP
+print_y "$Info 开始安装LNMP软件包..."
+rm -rf ./lnmp*
+wget https://github.com/pgw1314/sh/raw/master/conf/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && LNMP_Auto="y" DBSelect="2" DB_Root_Password="wei@1992." InstallInnodb="y" PHPSelect="6" SelectMalloc="1" ./install.sh lnmp
+$sh_path/oh_my_zsh_install.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error LNMP安装中出错了！"
+    exit
+fi
+print_g "$Info LNMP软件包安装完成"
 
-wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && LNMP_Auto="y" DBSelect="2" DB_Root_Password="wei@1992." InstallInnodb="y" PHPSelect="6" SelectMalloc="1" ./install.sh lnmp
-
+#安装oh_my_zsh_install
+# print_y "$Info 开始安装oh-my-zsh软件包..."
+# $sh_path/oh_my_zsh_install.sh
+# if [[ $? != 0 ]]; then
+#     print_r "$Error oh_my_zsh_install安装中出错了！"
+#     exit
+# fi
+# print_g "$Info oh-my-zsh软件包安装完成"
 
