@@ -34,6 +34,28 @@ install_sh=(
     trans.sh
     youtube.sh
     )
+
+
+#-------------------------------------------------
+#函数名称： 获取操作系统类型
+#
+#   
+#返回值：Mac=1  Linux=2 Other=3 
+#-------------------------------------------------
+get_os_type(){
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        # Mac OS X 操作系统
+        #echo "Mac OS 操作系统"
+         os_type=1
+    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+        #echo "Linux 操作系统"
+        os_type=2
+    else
+        os_type=3
+    fi
+
+}
 #-------------------------------------------------
 #函数名称： 替换文件中的内容
 #
@@ -204,7 +226,78 @@ print_g $Info "脚本部署完成完成！！"
 
 
 #------------------------------开始安装软件---------------------------------------
+get_os_type
+if [[ $os_type != 2 ]]; then
+        exit
+fi
+#配置bashrc
+print_y "$Info 开始配置bashrc..."
+mv ~/.bashrc ~/.bashrc.bak
+cp $sh_path/conf/bashrc ~/.bashrc
+if [[ $? != 0 ]]; then
+    print_r "$Error bashrc配置中出错了！"
+    exit
+fi
+print_g "$Info bashrc配置完成"
+
+#安装基本软件
+print_y "$Info 开始安装基础软件包..."
+$sh_path/base_install.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error 基本软件安装中出错了！"
+    exit
+fi
+print_g "$Info 基本软件安装完成"
 
 
+#安装opencc
+print_y "$Info 开始安装opencc软件包..."
+$sh_path/opencc_install.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error Opencc安装中出错了！"
+    exit
+fi
+print_g "$Info opencc软件包安装完成"
+
+#安装youtube_upload_install
+print_y "$Info 开始安装youtube-upload软件包..."
+$sh_path/youtube_upload_install.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error youtube_upload_install安装中出错了！"
+    exit
+fi
+print_g "$Info youtube-upload软件包安装完成"
+
+#aria2
+print_y "$Info 开始安装aria2软件包..."
+$sh_path/aria2.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error aria2安装中出错了！"
+    exit
+fi
+print_g "$Info aria2软件包安装完成"
+
+#安装shadowsocksR
+print_y "$Info 开始安装shadowsocksR软件包..."
+$sh_path/shadowsocksR.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error shadowsocksR安装中出错了！"
+    exit
+fi
+print_g "$Info shadowsocksR软件包安装完成"
+
+
+#安装oh_my_zsh_install
+print_y "$Info 开始安装oh-my-zsh软件包..."
+$sh_path/oh_my_zsh_install.sh
+if [[ $? != 0 ]]; then
+    print_r "$Error oh_my_zsh_install安装中出错了！"
+    exit
+fi
+print_g "$Info oh-my-zsh软件包安装完成"
+
+#开始安装LNMP
+
+wget http://soft.vpser.net/lnmp/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && LNMP_Auto="y" DBSelect="2" DB_Root_Password="wei@1992." InstallInnodb="y" PHPSelect="6" SelectMalloc="1" ./install.sh lnmp
 
 
