@@ -12,7 +12,7 @@
 
 #引入脚本
 . ~/sh/funs/m_print.sh
-. ~/sh//funs/m_utils.sh
+. ~/sh/funs/m_utils.sh
 
 
 i_cmake=''

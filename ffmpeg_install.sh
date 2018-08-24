@@ -11,7 +11,7 @@
 
 #引入脚本
 . ~/sh/funs/m_print.sh
-. ~/sh//funs/m_utils.sh
+. ~/sh/funs/m_utils.sh
 
 Error="[错误]:"
 Info="[信息]："

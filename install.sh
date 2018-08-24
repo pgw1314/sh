@@ -287,8 +287,6 @@ fi
 print_g "$Info shadowsocksR软件包安装完成"
 
 
-
-
 #安装ffmpeg
 print_y "$Info 开始安装ffmpeg软件包..."
 $sh_path/ffmpeg_install.sh
