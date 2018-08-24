@@ -28,7 +28,7 @@ autojump_plugin_install(){
     fi
     cd ./autojump
     # exit
-    # ./install.py
+    ./install.py
     if [[ $? != 0 ]]; then
         print_r "错误：autojump插件安装失败!"
         exit
