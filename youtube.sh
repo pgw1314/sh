@@ -170,7 +170,8 @@ read_arg
 
 #去除文件空格
 ./rename.sh $old_path " " "_" y n n y
-
+#删除认证文件
+rm -rf ~/.youtube-upload-credentials.json
 # 准备命令文件
 youtube_cmd=/tmp/youtube_cmd.sh
 echo "#!/bin/bash" > $youtube_cmd
