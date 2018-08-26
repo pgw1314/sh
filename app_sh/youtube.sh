@@ -10,9 +10,8 @@
 #############################################################
 #引入脚本
 #打印模块
-. ./funs/m_print.sh
-#常用函数模块
-. ./funs/m_utils.sh
+. ~/sh/funs/m_print.sh
+. ~/sh/funs/m_utils.sh
 
 #上传的视频格式
 video_types=("mp4" "mkv" "avi" "wmv")
