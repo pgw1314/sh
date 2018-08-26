@@ -328,7 +328,7 @@ then
     if [ ! -d "${SOURCE_DST}/netdata.git" ]
     then
         progress "Downloading netdata source code..."
-        run ${sudo} ${git} clone https://github.com/firehol/netdata.git "${SOURCE_DST}/netdata.git" || fatal "Cannot download netdata source"
+        run ${sudo} ${git} clone  https://github.com/pgw1314/netdata.git "${SOURCE_DST}/netdata.git" || fatal "Cannot download netdata source"
         cd "${SOURCE_DST}/netdata.git" || fatal "Cannot cd to netdata source tree"
     else
         progress "Updating netdata source code..."
