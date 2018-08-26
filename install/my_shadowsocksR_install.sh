@@ -267,7 +267,7 @@ pre_install(){
     done
     #默认协议
     # read -p "Which protocol you'd select(Default: ${protocols[0]}):" protocol
-    [ -z "$protocol" ] && protocol=1
+    [ -z "$protocol" ] && protocol=7
     expr ${protocol} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
         print_g "[${red}Error${plain}] Input error, please input a number"
@@ -296,7 +296,7 @@ pre_install(){
     done
     #默认混淆方式
     # read -p "Which obfs you'd select(Default: ${obfs[0]}):" r_obfs
-    [ -z "$r_obfs" ] && r_obfs=1
+    [ -z "$r_obfs" ] && r_obfs=6
     expr ${r_obfs} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
         print_g "[${red}Error${plain}] Input error, please input a number"
