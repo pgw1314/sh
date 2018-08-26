@@ -236,7 +236,7 @@ Youtube_Upload_Insatll(){
 Arai2_Install(){
     #aria2
     print_y "$Info 开始安装aria2软件包..."
-    $install_sh_path/aria2.sh
+    $install_sh_path/my_aria2_install.sh
     if [[ $? != 0 ]]; then
         print_r "$Error aria2安装中出错了！"
         exit
@@ -248,7 +248,7 @@ Arai2_Install(){
 #安装shadowsocksR
 ShadowsocksR_Install(){
     print_y "$Info 开始安装shadowsocksR软件包..."
-    $install_sh_path/shadowsocksR.sh
+    $install_sh_path/my_shadowsocksR_install.sh
     if [[ $? != 0 ]]; then
         print_r "$Error shadowsocksR安装中出错了！"
         exit
@@ -273,7 +273,6 @@ LNMP_Install(){
     print_y "$Info 开始安装LNMP软件包..."
     rm -rf ./lnmp*
     wget https://github.com/pgw1314/sh/raw/master/conf/lnmp1.5.tar.gz -cO lnmp1.5.tar.gz && tar zxf lnmp1.5.tar.gz && cd lnmp1.5 && LNMP_Auto="y" DBSelect="2" DB_Root_Password="wei@1992." InstallInnodb="y" PHPSelect="6" SelectMalloc="1" ./install.sh lnmp
-    $install_sh_path/oh_my_zsh_install.sh
     if [[ $? != 0 ]]; then
         print_r "$Error LNMP安装中出错了！"
         exit
