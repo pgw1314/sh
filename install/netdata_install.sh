@@ -269,7 +269,7 @@ then
     if [ "${HAS_BASH4}" = "1" ]
     then
         tmp="$(mktemp /tmp/netdata-kickstart-XXXXXX)"
-        url="https://raw.githubusercontent.com/pgw1314/sh/master/install/netdata/install-required-packages.sh"
+        url="https://raw.githubusercontent.com/firehol/netdata-demo-site/master/install-required-packages.sh"
 
         progress "Downloading script to detect required packages..."
         if [ ! -z "${curl}" ]
@@ -297,7 +297,7 @@ then
         if [ "${ask}" = "1" ]
         then
             echo >&2 "It failed to install all the required packages, but I can try to install netdata."
-            # read -p "Press ENTER to continue to netdata installation > "
+            read -p "Press ENTER to continue to netdata installation > "
             progress "OK, let's give it a try..."
         fi
     else
@@ -328,7 +328,7 @@ then
     if [ ! -d "${SOURCE_DST}/netdata.git" ]
     then
         progress "Downloading netdata source code..."
-        run ${sudo} ${git} clone  https://github.com/pgw1314/netdata.git "${SOURCE_DST}/netdata.git" || fatal "Cannot download netdata source"
+        run ${sudo} ${git} clone https://github.com/firehol/netdata.git "${SOURCE_DST}/netdata.git" || fatal "Cannot download netdata source"
         cd "${SOURCE_DST}/netdata.git" || fatal "Cannot cd to netdata source tree"
     else
         progress "Updating netdata source code..."
