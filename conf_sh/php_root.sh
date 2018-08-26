@@ -56,10 +56,11 @@ else
     print_r $Error "php-fpm启动失败！"
 fi
 print_y $Info "正在添加到开机启动.."
-is_start=$(cat /etc/rc.local | grep php-fpm)
+is_start=$(cat /etc/rc.d/rc.local | grep php-fpm)
 if [[ -z $is_start ]]; then
-    $(echo php-fpm -R >> /etc/rc.local)
+    $(echo php-fpm -R >> /etc/rc.d/rc.local)
 fi
+sudo chmod 755 /etc/rc.d/rc.local
 is_start=$(cat /etc/rc.local | grep php-fpm)
 if [[ -n $is_start ]]; then
     print_g $Info "开机启动设置成功！"
