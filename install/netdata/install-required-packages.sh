@@ -1626,7 +1626,7 @@ if [ ${#PACKAGES_TO_INSTALL[@]} -gt 0 ]
 
 	if [ ${DONT_WAIT} -eq 0 -a ${NON_INTERACTIVE} -eq 0 ]
 		then
-		read -p "Press ENTER to run it > " || exit 1
+		# read -p "Press ENTER to run it > " || exit 1
 	fi
 
 	${package_installer} "${PACKAGES_TO_INSTALL[@]}" || install_failed $?
