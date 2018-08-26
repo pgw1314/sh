@@ -30,4 +30,5 @@ if [[ $? != 0 ]]; then
     exit
 else
     print_g $Info "Plex安装并启动"
+    rm -rf plexmediaserver-1.13.5.5332-21ab172de.x86_64.rpm
 fi
