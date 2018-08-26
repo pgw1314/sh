@@ -36,9 +36,9 @@ install_sh_path=$sh_path/install
 github_path="https://github.com/pgw1314/sh.git"
 
 install_list=(
-    rename.sh
-    trans.sh
-    youtube.sh
+    myrename.sh
+    mytrans.sh
+    myyoutube.sh
     myinstall.sh
 )
 
