@@ -444,7 +444,7 @@ for name in $@; do
     elif [[ $name == "nodedata" ]]; then   
         print_y $Info "安装 nodedata"
         Nodedata_Install
-     elif [[ $name == "nodedata" ]]; then   
+     elif [[ $name == "screen" ]]; then   
         print_y $Info "安装 Screen"
         yum -y install screen
         if [[ $? == 0 ]]; then
