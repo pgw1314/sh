@@ -304,7 +304,7 @@ ZSHP_Install(){
 #安装oh_my_zsh 插件
 Netdata_Install(){
     print_y "$Info 开始安装NetData..."
-    $install_sh_path/nodedata/netdata_install.sh
+    $install_sh_path/netdata_install.sh
     if [[ $? != 0 ]]; then
         print_r "$Error NetData 插件安装中出错了！"
         exit
