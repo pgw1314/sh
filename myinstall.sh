@@ -39,7 +39,7 @@ install_list=(
     rename.sh
     trans.sh
     youtube.sh
-    install.sh
+    myinstall.sh
 )
 
 
