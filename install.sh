@@ -438,12 +438,20 @@ for name in $@; do
     elif [[ $name == "zshp" ]]; then   
         print_y $Info "安装 zshp"
         ZSHP_Install
-    elif [[ $name == "lnmp" ]]; then   
+    elif [[ $name == "lnmp" ]]; then   +
         print_y $Info "安装 LNMP"
         LNMP_Install
     elif [[ $name == "nodedata" ]]; then   
         print_y $Info "安装 nodedata"
         Nodedata_Install
+     elif [[ $name == "nodedata" ]]; then   
+        print_y $Info "安装 Screen"
+        yum -y install screen
+        if [[ $? == 0 ]]; then
+                print_g $Info "Screen 安装成功！！"
+            else
+                print_r $Error "Screen 安装失败！"
+        fi
     else
         print_r $Error "对不起，没有$name安装项！！"
 
