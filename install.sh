@@ -302,14 +302,14 @@ ZSHP_Install(){
 }
 
 #安装oh_my_zsh 插件
-Nodedata_Install(){
-    print_y "$Info 开始安装NodeData..."
-    $install_sh_path/nodedata/nodedata_install.sh
+Netdata_Install(){
+    print_y "$Info 开始安装NetData..."
+    $install_sh_path/nodedata/netdata_install.sh
     if [[ $? != 0 ]]; then
-        print_r "$Error NodeData 插件安装中出错了！"
+        print_r "$Error NetData 插件安装中出错了！"
         exit
     fi
-    print_g "$Info NodeData安装完成"
+    print_g "$Info NetData安装完成"
 }
 
 Shell_Install(){
@@ -440,9 +440,9 @@ for name in $@; do
     elif [[ $name == "lnmp" ]]; then   +
         print_y $Info "安装 LNMP"
         LNMP_Install
-    elif [[ $name == "nodedata" ]]; then   
-        print_y $Info "安装 nodedata"
-        Nodedata_Install
+    elif [[ $name == "netdata" ]]; then   
+        print_y $Info "安装 netdata"
+        Netdata_Install
      elif [[ $name == "screen" ]]; then   
         print_y $Info "安装 Screen"
         yum -y install screen
