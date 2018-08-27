@@ -40,6 +40,7 @@ install_list=(
     mytrans.sh
     myyoutube.sh
     myinstall.sh
+    mp3tag.sh
 )
 
 
