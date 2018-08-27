@@ -5,7 +5,7 @@
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias rf='rf -rf'
+alias rf='rm -rf'
 alias sls='screen -ls'
 alias sr='screen -r '
 alias sc='screen -S '
