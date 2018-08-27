@@ -61,9 +61,15 @@ build_new_name(){
             print_y "错误：文件名转换为简体错误！！"
            fi
         fi
-        
+        # echo "匹配："$g_pattern
+        # echo "替换："$g_match
         # #判断匹配字符串和替换字符串是否为空
-        g_new_file_name=$(echo $b_n_n_file_name | sed "s/$g_pattern/$g_match/g")
+        if [[ -z $g_file_type ]]; then
+            #statements
+            g_new_file_name=$(echo $b_n_n_file_name | sed "s/$g_pattern/$g_match/g")
+        else
+            g_new_file_name=$(echo $b_n_n_file_name | sed "s/$g_pattern/$g_match/g").$g_file_type
+        fi
 
 }
 
@@ -145,11 +151,8 @@ pre_data(){
 
         fi
         #新的文件路径
-        if [[ -z $g_file_type ]]; then
-                g_new_file_path=$pre_data_path/$pre_data_new_file_name
-             else
-                g_new_file_path=$pre_data_path/$pre_data_new_file_name.$g_file_type
-        fi
+        g_new_file_path=$pre_data_path/$pre_data_new_file_name
+     
         # print_y "--------------------pre_data 变量列表---------------------"
         # print_g "pre_data_path=$pre_data_path"
         # print_g "pre_data_file=$pre_data_file"
@@ -273,9 +276,12 @@ init_arg(){
     #文件类型
     g_file_type=''
 
+    if [[ -z $g_pattern ]]; then
+        g_pattern=" "
+    fi
     
     #默认替换空格文件名,如果匹配模式等于空
-    if [[ $g_pattern == "y" && $g_arg_num -eq 2 ]]; then
+    if [[  $g_pattern == "y" && $g_arg_num -eq 2 ]]; then
         #statements
         g_pattern=" "
         g_match="_"

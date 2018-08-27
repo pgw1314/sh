@@ -276,7 +276,7 @@ read_dir(){
     # exit
     # init_args $g_path 
     #去除文件空格
-    ./rename.sh $g_path " " "_" y n n y
+    myrename $g_path " " "_" y n n y
 
     #判断是否是文件夹
     if [[ -d $g_path ]]; then

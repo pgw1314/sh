@@ -320,7 +320,7 @@ Shell_Install(){
             continue  
         fi
         # print_g "安装Shell:" $file
-        sudo rm -rf $shell_path
+ 
         # 判断文件类型
         file_type=${file_path##*.}
         if [[ $file_type == "sh" ]]; then
@@ -334,9 +334,10 @@ Shell_Install(){
                 # print_g $Info "shell_file_path=$shell_file_path"
                 # echo "-------------------------------------"
                 # continue
-                sudo mkdir -p $shell_path
+                
                 #复制脚本
-                sudo cp $file_path $shell_file_path
+                sudo cp  $file_path $shell_file_path
+
                 sudo chmod -R 755 $shell_file_path
     #             #替换函数库路径
     #             replase_file_content $shell_file_path ".\/funs" "\/usr\/local\/shell\/funs"  
@@ -386,6 +387,8 @@ Read_Dir(){
 
 
 #-----------------------------主程序开始-------------------------------------------
+sudo rm -rf $shell_path
+sudo mkdir -p $shell_path
 Read_Dir $sh_path
 
 Clone_Github
