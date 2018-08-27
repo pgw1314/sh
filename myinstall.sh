@@ -337,6 +337,7 @@ Shell_Install(){
                 sudo mkdir -p $shell_path
                 #复制脚本
                 sudo cp $file_path $shell_file_path
+                sudo chmod -R 755 $shell_file_path
     #             #替换函数库路径
     #             replase_file_content $shell_file_path ".\/funs" "\/usr\/local\/shell\/funs"  
     # # #             #替换配置文件路径

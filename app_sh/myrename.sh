@@ -54,10 +54,6 @@ build_new_name(){
         # #判断是否繁简体转换
         if [[ $g_is_trans_name == "y" ]]; then
             # 判断是否安装了OpenCC如果没有安装则安装
-            opencc --version
-            if [[ $? != 0 ]]; then
-                $(opencc_install)
-            fi
            old_b_n_n_file_name=$b_n_n_file_name
            b_n_n_file_name=$(echo $b_n_n_file_name | opencc -c t2s)
            if [[ $? != 0 ]]; then
