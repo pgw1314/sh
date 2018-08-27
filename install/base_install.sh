@@ -25,6 +25,7 @@ i_gjj=''
 i_vim=''
 i_youtube_dl=''
 i_screen=''
+i_sshfs=''
 
 #-------------------------------------------------
 #函数名称： 安装软件
@@ -78,6 +79,11 @@ install(){
     yum -y install screen
     if [[ $? == 0 ]]; then
         i_screen=y
+    fi
+
+    yum -y install fuse-sshfs
+    if [[ $? == 0 ]]; then
+        i_sshfs=y
     fi
 
     sudo wget https://yt-dl.org/downloads/latest/youtube-dl -O /usr/local/bin/youtube-dl
@@ -150,6 +156,11 @@ preview(){
         print_g "screen    :安装成功"
     else
         print_r "screen    :安装失败"
+    fi
+    if [[ -n $i_sshfs ]]; then
+        print_g "sshfs    :安装成功"
+    else
+        print_r "sshfs    :安装失败"
     fi
 
     if [[ -n $i_youtube_dl ]]; then
