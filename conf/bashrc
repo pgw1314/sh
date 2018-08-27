@@ -9,6 +9,7 @@ alias rf='rf -rf'
 alias sls='screen -ls'
 alias sr='screen -r '
 alias sc='screen -S '
+alias dsize='du -h --max-depth=1 '
 # Source global definitions
 if [ -f /etc/bashrc ]; then
         . /etc/bashrc
