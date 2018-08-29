@@ -45,8 +45,8 @@ autojump_plugin_install(){
 #-------------------------------------------------
 syntax_highlighting_plugin_install(){
     syntax_highlighting_path=${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-    rm -rf $syntax_highlighting_path
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $syntax_highlighting_path
+   sudo  rm -rf $syntax_highlighting_path
+    sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $syntax_highlighting_path
     if [[ $? != 0 ]]; then
         print_r "错误：syntax-highlighting插件安装失败!"
         exit
@@ -60,8 +60,8 @@ syntax_highlighting_plugin_install(){
 #-------------------------------------------------
 autosuggestions_plugin_install(){
     autosuggestions_path=$ZSH_CUSTOM/plugins/zsh-autosuggestions
-    rm -rf $autosuggestions_path
-    git clone git://github.com/zsh-users/zsh-autosuggestions $autosuggestions_path
+   sudo  rm -rf $autosuggestions_path
+   sudo  git clone git://github.com/zsh-users/zsh-autosuggestions $autosuggestions_path
     if [[ $? != 0 ]]; then
         print_r "错误：autosuggestions插件安装失败!"
         exit

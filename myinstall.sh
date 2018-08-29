@@ -43,6 +43,11 @@ install_list=(
     mp3tag.sh
 )
 
+mac_sh=(
+    zsh
+    zshp
+)
+
 
 
 
@@ -385,82 +390,122 @@ Read_Dir(){
     done
 }
 
+#在Mac上安装
+Mac_Install(){
+#Mac上可以安装的脚本
+mac_install_list=()
+    for mac in ${mac_sh[@]}; do
+        for in_sh in $@; do
+            if [[ $mac == $in_sh ]]; then
+                echo $mac
+                mac_install_list=("${mac_install_list[@]}" $mac)
+            fi
+        done
+    done
+    if [[ ${#mac_install_list[@]} == 0 ]]; then
+        print_r $Error "对不起， $* 不能在Mac OS上安装！！"
+        exit
+    fi
+
+    for mac in ${mac_install_list[@]}; do
+        if [[ $mac == "zsh" ]]; then   
+            # print_y $Info "安装 zsh"
+            ZSH_Install
+        elif [[ $mac == "zshp" ]]; then   
+            # print_y $Info "安装 zshp"
+            ZSHP_Install
+       fi
+    done
+
+}
+
+#在Linux上安装
+Linux_Install(){
+    Config_Bashrc
+    for name in $@; do
+        if [[ $name == "all" ]]; then
+            print_y $Info "安装全部...."
+            Base_Install
+            Opencc_Install
+            Youtube_Upload_Insatll
+            Arai2_Install
+            ShadowsocksR_Install
+            FFmpeg_Install
+            LNMP_Install
+
+        elif [[ $name == "no_lnmp" ]]; then
+            print_y $Info "不装LNMP...."
+            Base_Install
+            Opencc_Install
+            Youtube_Upload_Insatll
+            Arai2_Install
+            ShadowsocksR_Install
+            FFmpeg_Install
+        elif [[ $name == "ssr" ]]; then
+            print_y $Info "安装ssr..."
+            ShadowsocksR_Install
+        elif [[ $name == "youtube" ]]; then
+            print_y $Info "安装 youtube"
+            Youtube_Upload_Insatll
+        elif [[ $name == "aria2" ]]; then
+            print_y $Info "安装 aria2"
+            Arai2_Install
+        elif [[ $name == "ffmpeg" ]]; then
+            print_y $Info "安装 ffmpeg"
+            FFmpeg_Install
+        elif [[ $name == "opencc" ]]; then
+            print_y $Info "安装 opencc"
+            Opencc_Install
+        elif [[ $name == "zsh" ]]; then   
+            print_y $Info "安装 zsh"
+            ZSH_Install
+        elif [[ $name == "zshp" ]]; then   
+            print_y $Info "安装 zshp"
+            ZSHP_Install
+        elif [[ $name == "lnmp" ]]; then   +
+            print_y $Info "安装 LNMP"
+            LNMP_Install
+        elif [[ $name == "netdata" ]]; then   
+            print_y $Info "安装 netdata"
+            Netdata_Install
+         elif [[ $name == "screen" ]]; then   
+            print_y $Info "安装 Screen"
+            yum -y install screen
+            if [[ $? == 0 ]]; then
+                    print_g $Info "Screen 安装成功！！"
+                else
+                    print_r $Error "Screen 安装失败！"
+            fi
+        else
+            print_r $Error "对不起，没有$name安装项！！"
+
+        fi
+    done
+}
 
 
 #-----------------------------主程序开始-------------------------------------------
-sudo rm -rf $shell_path
-sudo mkdir -p $shell_path
-Read_Dir $sh_path
+# sudo rm -rf $shell_path
+# sudo mkdir -p $shell_path
+# Read_Dir $sh_path
 
-Clone_Github
+# Clone_Github
 
 Get_OS_Type
-if [[ $os_type != 2 ]]; then
+if [[ $os_type == 1 ]]; then
+    Mac_Install "$@"
+elif [[ $os_type == 2 ]]; then
+    Linux_Install "$@"
+elif [[ $os_type == 3 ]]; then
     [ ! -z $1 ] && print_r $Error "对不起你的系统不支持，其他程序的安装！"
-        exit
 fi
-# 安装全部
-Config_Bashrc
 
-for name in $@; do
-    if [[ $name == "all" ]]; then
-        print_y $Info "安装全部...."
-        Base_Install
-        Opencc_Install
-        Youtube_Upload_Insatll
-        Arai2_Install
-        ShadowsocksR_Install
-        FFmpeg_Install
-        LNMP_Install
 
-    elif [[ $name == "no_lnmp" ]]; then
-        print_y $Info "不装LNMP...."
-        Base_Install
-        Opencc_Install
-        Youtube_Upload_Insatll
-        Arai2_Install
-        ShadowsocksR_Install
-        FFmpeg_Install
-    elif [[ $name == "ssr" ]]; then
-        print_y $Info "安装ssr..."
-        ShadowsocksR_Install
-    elif [[ $name == "youtube" ]]; then
-        print_y $Info "安装 youtube"
-        Youtube_Upload_Insatll
-    elif [[ $name == "aria2" ]]; then
-        print_y $Info "安装 aria2"
-        Arai2_Install
-    elif [[ $name == "ffmpeg" ]]; then
-        print_y $Info "安装 ffmpeg"
-        FFmpeg_Install
-    elif [[ $name == "opencc" ]]; then
-        print_y $Info "安装 opencc"
-        Opencc_Install
-    elif [[ $name == "zsh" ]]; then   
-        print_y $Info "安装 zsh"
-        ZSH_Install
-    elif [[ $name == "zshp" ]]; then   
-        print_y $Info "安装 zshp"
-        ZSHP_Install
-    elif [[ $name == "lnmp" ]]; then   +
-        print_y $Info "安装 LNMP"
-        LNMP_Install
-    elif [[ $name == "netdata" ]]; then   
-        print_y $Info "安装 netdata"
-        Netdata_Install
-     elif [[ $name == "screen" ]]; then   
-        print_y $Info "安装 Screen"
-        yum -y install screen
-        if [[ $? == 0 ]]; then
-                print_g $Info "Screen 安装成功！！"
-            else
-                print_r $Error "Screen 安装失败！"
-        fi
-    else
-        print_r $Error "对不起，没有$name安装项！！"
 
-    fi
-done
+
+
+# # 安装全部
+
 
 
 
