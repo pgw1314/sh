@@ -495,6 +495,7 @@ Get_OS_Type
 if [[ $os_type == 1 ]]; then
     Mac_Install "$@"
 elif [[ $os_type == 2 ]]; then
+    Read_Dir $sh_path
     Linux_Install "$@"
 elif [[ $os_type == 3 ]]; then
     [ ! -z $1 ] && print_r $Error "对不起你的系统不支持，其他程序的安装！"
