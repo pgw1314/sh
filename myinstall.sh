@@ -495,6 +495,8 @@ Get_OS_Type
 if [[ $os_type == 1 ]]; then
     Mac_Install "$@"
 elif [[ $os_type == 2 ]]; then
+    sudo rm -rf $shell_path
+    sudo mkdir -p $shell_path
     Read_Dir $sh_path
     Linux_Install "$@"
 elif [[ $os_type == 3 ]]; then
