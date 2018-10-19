@@ -586,79 +586,80 @@ Update_Shell(){
 	fi
 }
 action=$1
-if [[ "${action}" == "update-bt-tracker" ]]; then
-	Update_bt_tracker_cron
-else
-# echo && echo -e " Aria2 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-#   -- Toyo | doub.io/shell-jc4 --
-  
-#  ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
-# ————————————
-#  ${Green_font_prefix} 1.${Font_color_suffix} 安装 Aria2
-#  ${Green_font_prefix} 2.${Font_color_suffix} 更新 Aria2
-#  ${Green_font_prefix} 3.${Font_color_suffix} 卸载 Aria2
-# ————————————
-#  ${Green_font_prefix} 4.${Font_color_suffix} 启动 Aria2
-#  ${Green_font_prefix} 5.${Font_color_suffix} 停止 Aria2
-#  ${Green_font_prefix} 6.${Font_color_suffix} 重启 Aria2
-# ————————————
-#  ${Green_font_prefix} 7.${Font_color_suffix} 修改 配置文件
-#  ${Green_font_prefix} 8.${Font_color_suffix} 查看 配置信息
-#  ${Green_font_prefix} 9.${Font_color_suffix} 查看 日志信息
-#  ${Green_font_prefix}10.${Font_color_suffix} 配置 自动更新 BT-Tracker服务器
-# ————————————" && echo
-if [[ -e ${aria2c} ]]; then
-	check_pid
-	if [[ ! -z "${PID}" ]]; then
-		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 并 ${Green_font_prefix}已启动${Font_color_suffix}"
-	else
-		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 但 ${Red_font_prefix}未启动${Font_color_suffix}"
-	fi
-else
-	echo -e " 当前状态: ${Red_font_prefix}未安装${Font_color_suffix}"
+if [[ "${action}" == "setting" ]]; then
+
+    echo && echo -e " Aria2 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+      -- Toyo | doub.io/shell-jc4 --
+      
+     ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
+    ————————————
+     ${Green_font_prefix} 1.${Font_color_suffix} 安装 Aria2
+     ${Green_font_prefix} 2.${Font_color_suffix} 更新 Aria2
+     ${Green_font_prefix} 3.${Font_color_suffix} 卸载 Aria2
+    ————————————
+     ${Green_font_prefix} 4.${Font_color_suffix} 启动 Aria2
+     ${Green_font_prefix} 5.${Font_color_suffix} 停止 Aria2
+     ${Green_font_prefix} 6.${Font_color_suffix} 重启 Aria2
+    ————————————
+     ${Green_font_prefix} 7.${Font_color_suffix} 修改 配置文件
+     ${Green_font_prefix} 8.${Font_color_suffix} 查看 配置信息
+     ${Green_font_prefix} 9.${Font_color_suffix} 查看 日志信息
+     ${Green_font_prefix}10.${Font_color_suffix} 配置 自动更新 BT-Tracker服务器
+    ————————————" && echo
+    if [[ -e ${aria2c} ]]; then
+    	check_pid
+    	if [[ ! -z "${PID}" ]]; then
+    		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 并 ${Green_font_prefix}已启动${Font_color_suffix}"
+    	else
+    		echo -e " 当前状态: ${Green_font_prefix}已安装${Font_color_suffix} 但 ${Red_font_prefix}未启动${Font_color_suffix}"
+    	fi
+    else
+    	echo -e " 当前状态: ${Red_font_prefix}未安装${Font_color_suffix}"
+    fi
+    echo
+    stty erase '^H' && read -p " 请输入数字 [0-10]:" num
+    
 fi
-# echo
-# stty erase '^H' && read -p " 请输入数字 [0-10]:" num
+
 num=1
-case "$num" in
-	0)
-	Update_Shell
-	;;
-	1)
-	Install_aria2
-	;;
-	2)
-	Update_aria2
-	;;
-	3)
-	Uninstall_aria2
-	;;
-	4)
-	Start_aria2
-	;;
-	5)
-	Stop_aria2
-	;;
-	6)
-	Restart_aria2
-	;;
-	7)
-	Set_aria2
-	;;
-	8)
-	View_Aria2
-	;;
-	9)
-	View_Log
-	;;
-	10)
-	Update_bt_tracker
-	;;
-	*)
-	echo "请输入正确数字 [0-10]"
-	;;
-esac
-fi
+    case "$num" in
+    	0)
+    	Update_Shell
+    	;;
+    	1)
+    	Install_aria2
+    	;;
+    	2)
+    	Update_aria2
+    	;;
+    	3)
+    	Uninstall_aria2
+    	;;
+    	4)
+    	Start_aria2
+    	;;
+    	5)
+    	Stop_aria2
+    	;;
+    	6)
+    	Restart_aria2
+    	;;
+    	7)
+    	Set_aria2
+    	;;
+    	8)
+    	View_Aria2
+    	;;
+    	9)
+    	View_Log
+    	;;
+    	10)
+    	Update_bt_tracker
+    	;;
+    	*)
+    	echo "请输入正确数字 [0-10]"
+    	;;
+    esac
 # # 重新替换配置文件
 # mv $aria2_conf $aria2_conf.bak
 # wget -O $aria2_conf https://raw.githubusercontent.com/pgw1314/sh/master/conf/aria2.conf
