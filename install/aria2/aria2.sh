@@ -12,9 +12,9 @@ export PATH
 sh_ver="1.1.10"
 filepath=$(cd "$(dirname "$0")"; pwd)
 file_1=$(echo -e "${filepath}"|awk -F "$0" '{print $1}')
-file="/root/.aria2"
-aria2_conf="/root/.aria2/aria2.conf"
-aria2_log="/root/.aria2/aria2.log"
+file="/var/local/aria2"
+aria2_conf="/var/local/aria2/aria2.conf"
+aria2_log="/var/local/aria2/aria2.log"
 Folder="/usr/local/aria2"
 aria2c="/usr/bin/aria2c"
 Crontab_file="/usr/bin/crontab"
