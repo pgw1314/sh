@@ -24,7 +24,7 @@
 ` sh -c "$(curl -fsSL https://raw.githubusercontent.com/pgw1314/sh/master/install/base_install.sh)"`
 
 #### LNMP安装脚本（lnmp_install.sh）
-#####软件版本：
+##### 软件版本：
 - Nginx版本 1.14
 - MySQL版本 5.5
 - PHP版本 7.0
