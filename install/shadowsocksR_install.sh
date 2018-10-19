@@ -248,7 +248,7 @@ pre_install(){
     done
     #默认加密方式
     # read -p "Which cipher you'd select(Default: ${ciphers[1]}):" pick
-    [ -z "$pick" ] && pick=2
+    [ -z "$pick" ] && pick=12
     expr ${pick} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
         print_g "[${red}Error${plain}] Please enter a number"
@@ -277,7 +277,7 @@ pre_install(){
     done
     #默认协议
     # read -p "Which protocol you'd select(Default: ${protocols[0]}):" protocol
-    [ -z "$protocol" ] && protocol=7
+    [ -z "$protocol" ] && protocol=3
     expr ${protocol} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
         print_g "[${red}Error${plain}] Input error, please input a number"
@@ -306,7 +306,7 @@ pre_install(){
     done
     #默认混淆方式
     # read -p "Which obfs you'd select(Default: ${obfs[0]}):" r_obfs
-    [ -z "$r_obfs" ] && r_obfs=6
+    [ -z "$r_obfs" ] && r_obfs=2
     expr ${r_obfs} + 1 &>/dev/null
     if [ $? -ne 0 ]; then
         print_g "[${red}Error${plain}] Input error, please input a number"
