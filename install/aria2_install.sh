@@ -153,7 +153,7 @@ Service_aria2(){
 }
 Installation_dependency(){
 	if [[ ${release} = "centos" ]]; then
-		yum update
+		yum update -y
 		yum -y groupinstall "Development Tools"
 		yum install vim -y
 	else
