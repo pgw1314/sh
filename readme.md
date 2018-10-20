@@ -6,6 +6,7 @@
 - [FFmpeg安装脚本](https://github.com/pgw1314/sh#ffmpeg%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%ACffmpeg_installsh)
 - [Aria2c安装脚本](https://github.com/pgw1314/sh#aria2c%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%ACaria2_installsh)
 - [ShadowsocksR安装脚本](https://github.com/pgw1314/sh#shadowsocksr%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%ACshadowsocksr_installsh)
+- [MEGAcmd安装脚本](https://github.com/pgw1314/sh#megacmd%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%ACmega_installsh)
 ## 脚本详情：
 #### VPS基础安装脚本（base_install.sh）
 ##### 安装列表：
