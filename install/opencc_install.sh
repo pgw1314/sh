@@ -5,14 +5,47 @@
 #
 #版本：v1.0.1
 #
+#应用平台：Centos7、MacOS
+#
 #最后修改时间：2018年8月23日
 #
 #############################################################
 
 
 #引入脚本
-. ~/sh/funs/m_print.sh
-. ~/sh/funs/m_utils.sh
+#---------------------打印模块---------------------
+print_y(){
+    echo -e "\033[33m $@ \033[0m"
+}
+print_r(){
+    echo -e "\033[31m $@ \033[0m"
+}
+print_g(){
+    echo -e "\033[32m $@ \033[0m"
+}
+#---------------------------------------------------
+
+
+#-------------------------------------------------
+#函数名称： 获取操作系统类型
+#
+#   
+#返回值：Mac=1  Linux=2 Other=3 
+#-------------------------------------------------
+get_os_type(){
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        # Mac OS X 操作系统
+        #echo "Mac OS 操作系统"
+         os_type=1
+    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+        #echo "Linux 操作系统"
+        os_type=2
+    else
+        os_type=3
+    fi
+
+}
 #-------------------------------------------------
 #函数名称： Mac系统下安装Opencc
 #   
@@ -76,6 +109,9 @@ linux_install(){
 }
 
 #--------------------------主程序开始-----------------------------------
+Error="[错误]:"
+Info="[信息]："
+
 #判断是否已经安装了opencc
 opencc --version
 if [[ $? == 0 ]]; then
@@ -84,7 +120,7 @@ if [[ $? == 0 ]]; then
 fi
 
 
-print_y "开始安装OpenCC...."
+print_g $Info"开始安装OpenCC...."
 #判断系统类型
 get_os_type
 if [[ $os_type == 1 ]]; then
@@ -95,8 +131,8 @@ fi
 #判断opencc是否安装成功
 opencc --version
 if [[ $? != 0 ]]; then
-    print_r "我也很抱歉，Opencc安装失败！！"
+    print_r $Error"我也很抱歉，Opencc安装失败！！"
 else
-    print_g "Opencc安装成功，尽情的使用吧！！！！"
+    print_g $Info"Opencc安装成功，尽情的使用吧！！！！"
 fi
 

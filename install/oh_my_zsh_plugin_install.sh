@@ -10,27 +10,41 @@
 #############################################################
 
 
-#引入脚本
-. ~/sh/funs/m_print.sh
-. ~/sh/funs/m_utils.sh
+#---------------------打印模块---------------------
+print_y(){
+    echo -e "\033[33m $@ \033[0m"
+}
+print_r(){
+    echo -e "\033[31m $@ \033[0m"
+}
+print_g(){
+    echo -e "\033[32m $@ \033[0m"
+}
+#---------------------------------------------------
+
+Error="[错误]:"
+Info="[信息]："
+
 #-------------------------------------------------
 #函数名称： 安装autojump插件
 #   
 #功能：给oh-my-zsh安装autojump插件
 #   
 #-------------------------------------------------
+
 autojump_plugin_install(){
+    
     rm -rf ./autojump
     git clone git://github.com/joelthelion/autojump.git $autojump_path
     if [[ $? != 0 ]]; then
-        print_r "下载错误：autojump下载失败!"
+        print_r $Error"autojump下载失败!"
         exit
     fi
     cd ./autojump
     # exit
     ./install.py
     if [[ $? != 0 ]]; then
-        print_r "错误：autojump插件安装失败!"
+        print_r $Error"autojump插件安装失败!"
         exit
     fi
     cd -
@@ -48,7 +62,7 @@ syntax_highlighting_plugin_install(){
    sudo  rm -rf $syntax_highlighting_path
     sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $syntax_highlighting_path
     if [[ $? != 0 ]]; then
-        print_r "错误：syntax-highlighting插件安装失败!"
+        print_r $Error"syntax-highlighting插件安装失败!"
         exit
     fi
 }
@@ -63,7 +77,7 @@ autosuggestions_plugin_install(){
    sudo  rm -rf $autosuggestions_path
    sudo  git clone git://github.com/zsh-users/zsh-autosuggestions $autosuggestions_path
     if [[ $? != 0 ]]; then
-        print_r "错误：autosuggestions插件安装失败!"
+        print_r $Error"autosuggestions插件安装失败!"
         exit
     fi
 }
@@ -75,20 +89,20 @@ autosuggestions_plugin_install(){
 #判断是否安装zsh
 is_install=$(cat /etc/shells |grep zsh)
 if [[ -z $is_install ]]; then
-    print_r "请先运行oh_my_zsh_install，安装oh-my-zsh!"
+    print_r $Error"请先运行oh_my_zsh_install，安装oh-my-zsh!"
     exit
 fi
 
 #--------------------------插件安装-------------------------------------------
-print_y "开始安装autojump插件...."
+print_g $Info"开始安装autojump插件...."
 autojump_plugin_install
-print_g "autojump插件安装完成！"
+print_g $Info"autojump插件安装完成！"
 # exit
-print_y "开始安装syntax-highlighting插件...."
+print_g $Info"开始安装syntax-highlighting插件...."
 syntax_highlighting_plugin_install
-print_g "syntax-highlighting插件安装完成！"
+print_g $Info"syntax-highlighting插件安装完成！"
 
-print_y "开始安装autosuggestions插件...."
+print_g $Info"开始安装autosuggestions插件...."
 autosuggestions_plugin_install
 print_g "autosuggestions插件安装完成！"
 
@@ -96,7 +110,7 @@ print_g "autosuggestions插件安装完成！"
 print_y "开始安装配置oh-my-zsh..."
 mv ~/.zshrc ~/.zshrc.bak
 $(cat ~/sh/conf/zshrc > ~/.zshrc )
-#source ~/.zshrc
+source ~/.zshrc
 print_g "oh-my-zsh配置完成！"
 
 

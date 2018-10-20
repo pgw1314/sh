@@ -10,10 +10,39 @@
 #############################################################
 
 #引入脚本
-#打印模块
-. ~/sh/funs/m_print.sh
-#常用函数模块
-. ~/sh/funs/m_utils.sh
+#---------------------打印模块---------------------
+print_y(){
+    echo -e "\033[33m $@ \033[0m"
+}
+print_r(){
+    echo -e "\033[31m $@ \033[0m"
+}
+print_g(){
+    echo -e "\033[32m $@ \033[0m"
+}
+#---------------------------------------------------
+
+
+#-------------------------------------------------
+#函数名称： 获取操作系统类型
+#
+#   
+#返回值：Mac=1  Linux=2 Other=3 
+#-------------------------------------------------
+get_os_type(){
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        # Mac OS X 操作系统
+        #echo "Mac OS 操作系统"
+         os_type=1
+    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+        #echo "Linux 操作系统"
+        os_type=2
+    else
+        os_type=3
+    fi
+
+}
 
 loc_epel_path=~/sh/conf/epel.repo
 sys_epel_path=/etc/yum.repos.d/epel.repo
