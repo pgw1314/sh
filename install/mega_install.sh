@@ -111,17 +111,13 @@ Uninstall(){
         print_r $Error"你没用安装MEGA客户端不需要卸载！！"
         exit
     fi
-	read -p "你真的要删除Mega客户端吗? [Y/n] :" yn
-	[[ -z "${yn}" ]] && yn="y"
-	if [[ $yn == [Yy] ]]; then
-		rm -rf ${Config_Path}
-        sudo rm -rf ${Cmd_Path}
-        if [[ $? == '0' ]]; then
-            print_g $Info"MEGA卸载完成！"
-        else
-            print_r $Error"MEGA卸载中发生错误，请检查"
-        fi
-	fi
+	rm -rf ${Config_Path}
+    sudo rm -rf ${Cmd_Path}
+    if [[ $? == '0' ]]; then
+        print_g $Info"MEGA卸载完成！"
+    else
+        print_r $Error"MEGA卸载中发生错误，请检查"
+    fi
     
 }
 
