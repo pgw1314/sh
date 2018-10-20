@@ -48,5 +48,13 @@
 - 加密方法：chacha20
 - 协    议：auth_sha1_v4
 - 混    淆：http_simple
+
 ##### 安装代码：
 ` sh -c "$(curl -fsSL https://raw.githubusercontent.com/pgw1314/sh/master/install/shadowsocksR_install.sh)"`
+
+#### MEGAcmd安装脚本（mega_install.sh）
+
+##### 安装代码：
+` curl -o mega_install.sh https://raw.githubusercontent.com/pgw1314/sh/master/install/mega_install.sh && sh mega_install.sh && rm -rf mega_install.sh`
+##### 卸载代码：
+` curl -o mega_install.sh https://raw.githubusercontent.com/pgw1314/sh/master/install/mega_install.sh && sh mega_install.sh uninstall && rm -rf mega_install.sh`
