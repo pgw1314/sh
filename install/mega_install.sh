@@ -73,9 +73,9 @@ Install(){
     git clone https://github.com/t3rm1n4l/megacmd.git
     cd megacmd
     #拷贝所需的文件到指定地方
-    cp -r ./vendor/* /usr/lib/golang/src/
-    mkdir -p /usr/lib/golang/src/github.com/t3rm1n4l/megacmd/client
-    cp -r ./client/* /usr/lib/golang/src/github.com/t3rm1n4l/megacmd/client
+    sudo cp -r ./vendor/* /usr/lib/golang/src/
+    sudo mkdir -p /usr/lib/golang/src/github.com/t3rm1n4l/megacmd/client
+    sudo cp -r ./client/* /usr/lib/golang/src/github.com/t3rm1n4l/megacmd/client
     
     GOPATH=/tmp/ make
     if [[ $? != 0 ]]; then
