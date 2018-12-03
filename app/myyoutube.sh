@@ -9,9 +9,40 @@
 #
 #############################################################
 #引入脚本
-#打印模块
-. ~/sh/funs/m_print.sh
-. ~/sh/funs/m_utils.sh
+#引入脚本
+#---------------------打印模块---------------------
+print_y(){
+    echo -e "\033[33m $@ \033[0m"
+}
+print_r(){
+    echo -e "\033[31m $@ \033[0m"
+}
+print_g(){
+    echo -e "\033[32m $@ \033[0m"
+}
+#---------------------------------------------------
+
+
+#-------------------------------------------------
+#函数名称： 获取操作系统类型
+#
+#   
+#返回值：Mac=1  Linux=2 Other=3 
+#-------------------------------------------------
+get_os_type(){
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        # Mac OS X 操作系统
+        #echo "Mac OS 操作系统"
+         os_type=1
+    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
+        #echo "Linux 操作系统"
+        os_type=2
+    else
+        os_type=3
+    fi
+
+}
 
 #上传的视频格式
 video_types=("mp4" "mkv" "avi" "wmv")
@@ -76,7 +107,7 @@ upload_file(){
     # echo "------------------------------------------------------"
     # return
     #执行上传命令
-    echo "\$($upload_file_cmd)" >> $youtube_cmd
+    echo "$upload_file_cmd" >> $youtube_cmd
     # if [[ $? == 0 ]]; then
     #     #statements
     #     print_g "上传成功：$upload_file_path"
@@ -168,7 +199,7 @@ old_path=${old_path%*/}
 read_arg 
 
 #去除文件空格
-/usr/local/bin/myrename $old_path " " "_" y n n y
+#/usr/local/bin/myrename $old_path " " "_" y n n y
 #删除认证文件
 rm -rf ~/.youtube-upload-credentials.json
 # 准备命令文件
