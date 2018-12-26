@@ -59,3 +59,8 @@
 ` curl -o mega_install.sh https://raw.githubusercontent.com/pgw1314/sh/master/install/mega_install.sh && sh mega_install.sh && rm -rf mega_install.sh`
 ##### 卸载代码：
 ` curl -o mega_install.sh https://raw.githubusercontent.com/pgw1314/sh/master/install/mega_install.sh && sh mega_install.sh uninstall && rm -rf mega_install.sh`
+
+#### Python3.6安装脚本（python3_install.sh）
+
+##### 安装代码：
+` sh -c "$(curl -fsSL https://raw.githubusercontent.com/pgw1314/sh/master/install/python3_install.sh)"`
