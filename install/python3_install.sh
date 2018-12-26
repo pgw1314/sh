@@ -58,12 +58,36 @@ if [[ $os_type != 2 ]]; then
 fi
 
 print_g $Info"开始安装Python3.6..."
-yum install epel-release -y
-yum install https://centos7.iuscommunity.org/ius-release.rpm -y
-yum install python36u -y
-ln -s /bin/python3.6 /bin/python3
+sudo yum install epel-release -y
+if [[ $? != 0 ]]; then
+    print_r $Error 'epel-release安装错误！'
+    exit
+fi
+sudo yum install https://centos7.iuscommunity.org/ius-release.rpm -y
+if [[ $? != 0 ]]; then
+    print_r $Error 'Yum源安装错误！'
+    exit
+fi
+sudo yum install python36u -y
+if [[ $? != 0 ]]; then
+    print_r $Error 'Python3.6源安装错误！'
+    exit
+fi
+sudo ln -s /bin/python3.6 /bin/python3
+if [[ $? != 0 ]]; then
+    print_r $Error 'Python3.6创建连接错误！'
+    exit
+fi
 print_g $Info"开始安装pip3..."
-yum install python36u-pip -y
-ln -s /bin/pip3.6 /bin/pip3
-print_g $Info"Python3.6和pip3安装完成！！"
+sudo yum install python36u-pip -y
+if [[ $? != 0 ]]; then
+    print_r $Error 'pip安装错误！'
+    exit
+fi
+sudo ln -s /bin/pip3.6 /bin/pip3
+if [[ $? != 0 ]]; then
+    print_r $Error 'pip创建连接错误！'
+    exit
+fi
+print_g $Info"恭喜Python3.6和pip3安装完成！！"
 
