@@ -10,44 +10,11 @@
 #############################################################
 
 
-#引入脚本
-#---------------------打印模块---------------------
-print_y(){
-    echo -e "\033[33m $@ \033[0m"
-}
-print_r(){
-    echo -e "\033[31m $@ \033[0m"
-}
-print_g(){
-    echo -e "\033[32m $@ \033[0m"
-}
-#---------------------------------------------------
+#引入打印脚本
+source /Users/xiaowei/Code/sh/include/printer.sh
+source /Users/xiaowei/Code/sh/include/system.sh
 
 
-#-------------------------------------------------
-#函数名称： 获取操作系统类型
-#
-#   
-#返回值：Mac=1  Linux=2 Other=3 
-#-------------------------------------------------
-get_os_type(){
-
-    if [[ "$(uname)" == "Darwin" ]]; then
-        # Mac OS X 操作系统
-        #echo "Mac OS 操作系统"
-         os_type=1
-    elif [[ "$(expr substr $(uname -s) 1 5)" == "Linux" ]]; then
-        #echo "Linux 操作系统"
-        os_type=2
-    else
-        os_type=3
-    fi
-
-}
-
-
-
-#----------------------------函数定义开始----------------------------------------
 #-------------------------------------------------
 #函数名称： 帮助文档
 #   
@@ -90,7 +57,7 @@ build_new_name(){
            b_n_n_file_name=$(echo $b_n_n_file_name | opencc -c t2s)
            if [[ $? != 0 ]]; then
             b_n_n_file_name=$old_b_n_n_file_name
-            print_y "错误：文件名转换为简体错误！！"
+            print_error "文件名转换为简体错误！！"
            fi
         fi
         # echo "匹配："$g_pattern
@@ -122,25 +89,25 @@ rename_file(){
         #判断文件是否存在
             if [[ -e $1 ]]; then
                 if [[ -z $g_is_log ]]; then
-                    print_y "开始重命名文件：$1"
+                    print_info "开始重命名文件：$1"
                 fi
                 
                 $(mv "$1" "$2")
                 if [[ $? == 0 ]]; then
                     if [[ -z $g_is_log ]]; then
-                        print_g "重命名完成：$2"
+                        print_info "重命名完成：$2"
                     fi
                 else
-                    print_r "错误：$1重命名失败！！"
+                    print_error "$1重命名失败！！"
                 fi
             else
-                print_r "错误：$1文件或目录不存在！！"
+                print_error "$1文件或目录不存在！！"
             fi
 
         fi
         
     else
-        print_r "错误：重命名原文件路径和新文件路径都不能为空！"
+        print_error "重命名原文件路径和新文件路径都不能为空！"
     fi
     
 }
@@ -160,13 +127,6 @@ pre_data(){
         #原文件路径
         g_old_file_path=$1"/"$2
 
-        
-        
-        # #替换文件名中的空格
-        # pre_data_new_path=$(echo "$pre_data_path" | sed "s/ /_/g")
-        #pre_data_new_file=$(echo "$pre_data_file" | sed "s/ /_/g")    
-        # pre_data_new_file_path=$pre_data_new_path/$pre_data_new_file
-
         # #构建新的文件名b_n_n_new_file_name
         build_new_name $(echo "$pre_data_file" | sed "s/ /_/g")
         pre_data_new_file_name=$g_new_file_name
@@ -185,22 +145,7 @@ pre_data(){
         #新的文件路径
         g_new_file_path=$pre_data_path/$pre_data_new_file_name
      
-        # print_y "--------------------pre_data 变量列表---------------------"
-        # print_g "pre_data_path=$pre_data_path"
-        # print_g "pre_data_file=$pre_data_file"
-        # print_y "pre_data_new_file_path=$pre_data_new_file_path"
 
-        # print_g "pre_data_file_path=$pre_data_file_path"
-        # print_y "pre_data_file_type=$pre_data_file_type"
-        # print_r "pre_data_new_path=$pre_data_new_path"
-        # print_r "pre_data_new_file=$pre_data_new_file"
-        # print_r "pre_data_new_file_path=$pre_data_new_file_path"
-        # print_y "------------------------------------------------------"
-        # #新文件夹路径和新文件名
-        # if [[ -n $file_type ]]; then
-        #         new_file=$new_file"."$file_type
-        # fi
-        # new_path=$new_path"/"$new_file
 }
 #-------------------------------------------------
 #函数名称：预览模式
@@ -237,11 +182,7 @@ read_dir(){
    # print_g "read_dir_path=$read_dir_path"
     ls $read_dir_path | while read read_dir_file; do
         read_dir_file_path="$read_dir_path/$read_dir_file"
-        # print_y "--------------------read_dir 变量列表---------------------"
-        # print_g "read_dir_path=$read_dir_path"
-        # print_g "read_dir_file=$read_dir_file"
-        # print_y "------------------------------------------------------"
-        # return
+
         # #准备新文件名数据
          pre_data "$read_dir_path" "$read_dir_file"
          ##开始重命名文件
@@ -253,26 +194,7 @@ read_dir(){
                 fi
                 
          fi
-        
-  
-        # #为y则重命名否则为预览模式
-        # if [[ (-n $g_is_rep) && ($g_is_rep == "y")]]; then
-        #         rename "$old_path" "$new_path"
-        #     else
-        #         preview
-        # fi
-        # print_g "read_dir_file_path=$read_dir_file_path"
-        # #判断是否递归
-        # if [[ $g_is_tree == "y" ]]; then
-            # if [[ ! -f "$read_dir_file_path" ]]; then
-            #         #echo "递归"
-            #     # print_y "--------------------递归 变量列表---------------------"
-            #     # print_r "read_dir_file_path=$read_dir_file_path"
-            #     # print_y "------------------------------------------------------"
-            #     read_dir "$read_dir_file_path"
-            # fi
-            
-        # fi
+ 
     done
 }
 
@@ -319,16 +241,7 @@ init_arg(){
         g_match="_"
         g_is_rep="y"
     fi
-    # print_y "--------------------init_arg变量列表---------------------"
-    # print_g "g_arg_num=$g_arg_num"
-    # print_g "g_path=$g_path"
-    # print_g "g_pattern=$g_pattern"
-    # print_g "g_match=$g_match"
-    # print_g "g_is_rep=$g_is_rep"
-    # print_g "g_number=$g_number"
-    # print_g "g_is_trans_name=$g_is_trans_name"
-    # print_g "g_is_log=$g_is_log"
-    # print_y "------------------------------------------------------"
+
 
 }
 

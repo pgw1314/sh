@@ -10,12 +10,8 @@
 #############################################################
 
 #引入脚本
-. ~/sh/funs/m_print.sh
-. ~/sh/funs/m_utils.sh
-
-#----------------------------函数定义开始----------------------------------------
-
-
+#引入打印模块
+source /Users/xiaowei/Code/sh/include/printer.sh
 
 #-------------------------------------------------
 #函数名称： 获取视频转换所需的参数
@@ -32,12 +28,12 @@ read_args(){
         else
              print_y "请输入要转换的视频格式 ：多个格式用空格分割"
             read g_in_type 
-            is_null "参数错误：转换的格式不能为空！" y $g_in_type
+
     fi
 
     print_y "请输入新的视频格式： "
     read g_to_type
-    is_null  "参数错误：新文件格式不能为空！ " y $g_to_type
+
     
     print_y "请输入转换参数：如果为空则直接回车 "
     read g_trans_args
@@ -54,20 +50,7 @@ read_args(){
 
     print_y "是否删除源文件：默认不删除，输入y则删除 "
     read g_is_del
-
-
-    # print_y "--------------------read_args 变量列表---------------------"
-    # print_g "g_in_type=$g_in_type"
-    # print_g "g_to_type=$g_to_type"
-    # print_g "g_trans_args=$g_trans_args"
-    # print_g "g_start_time=$g_start_time"
-    # print_g "g_time=$g_time"
-    # print_g "g_to_path=$g_to_path"
-
-    # print_g "g_is_del=$g_is_del"
-    # print_y "------------------------------------------------------"
     
-
 }
 
 #-------------------------------------------------
@@ -204,16 +187,6 @@ pre_trans(){
             fi 
             g_new_file_path=$pre_trans_new_file_path
 
-              # print_y "--------------------pre_trans 变量列表---------------------"
-              # # #   # print_g "pre_trans_path=$pre_trans_path"
-              # # #   # print_g "pre_trans_file=$pre_trans_file"
-              # # #   # print_g "pre_trans_file_type=$pre_trans_file_type"
-              #   print_g "g_old_file_path=$g_old_file_path"
-              #   print_g "g_new_file_path=$g_new_file_path"
-              # # #   print_g "pre_trans_new_file_path=$pre_trans_new_file_path"
-
-              #   print_y "------------------------------------------------------"
-
             #开始转码
             trans_file
             # #判断是否删除源文件
@@ -238,11 +211,6 @@ read_dir(){
         if [[ -d $read_dir_file_path ]]; then
             read_dir $ead_dir_file_path
         else
-            # print_y "--------------------read_dir 变量列表---------------------"
-            # print_g "read_dir_path=$read_dir_path"
-            # print_g "read_dir_file=$read_dir_file"
-            # print_g "read_dir_file_path=$read_dir_file_path"
-            # print_y "------------------------------------------------------"
             pre_trans $read_dir_path $read_dir_file
         fi
     done
@@ -270,13 +238,8 @@ read_dir(){
     
     #去除路径带/
     g_path=${g_path%/}
-    # print_y "--------------------init_arg变量列表---------------------"
-    # print_g "g_path=$g_path"
-    # print_y "------------------------------------------------------"
-    # exit
-    # init_args $g_path 
     #去除文件空格
-    myrename $g_path " " "_" y n n y
+    rename $g_path " " "_" y n n y
 
     #判断是否是文件夹
     if [[ -d $g_path ]]; then
@@ -286,10 +249,7 @@ read_dir(){
             # 分解路径和文件名
             file_path=${g_path%/*}
             file_name=${g_path##*/}
-            #  print_y "--------------------init_arg变量列表---------------------"
-            # print_g "file_path=$file_path"
-            # print_g "file_name=$file_name"
-            # print_y "------------------------------------------------------"
+
             pre_trans $file_path $file_name y
 
     fi
