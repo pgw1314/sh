@@ -4,11 +4,11 @@ bd_path='/GoogleDriver'
 #GoogleDriver的路径
 gd_path='/mnt/pgw1314/百度云'
 #判断是否正在同步的临时文件
-syncing_file="/tmp/bgSyncing"
+syncing_file="/www/wwwroot/dl.iwen.cf/bgSyncing"
 
 
 #判断如果文件存在就说明正在同步中，退出当前程序
-if [ -f "/tmp/bgSyncing" ]; then
+if [ -f "/www/wwwroot/dl.iwen.cf/bgSyncing" ]; then
     exit
 fi
 #开始同步
