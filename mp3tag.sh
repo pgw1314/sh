@@ -14,13 +14,16 @@
 source /Users/xiaowei/Code/sh/include/printer.sh
 
 Rep_Tag(){
-
+    # 文件所在路径
     file_path=$1
+    # 文件名
     file=$2
+    # 文件路径和文件名
     file_path_name=$1/$2
     #保存原路径
     #获取到文件类型和文件名
     file_type=${file##*.}
+
     if [[ $file_type == $file ]]; then
         file_type=''
     fi
@@ -32,24 +35,17 @@ Rep_Tag(){
         print_y $Info "开始替换：$file_name"
         t=${file_name##*-}
         title=${t%.*}
-        #songer=${file%-*}
-       #print_y "--------------------pre_trans 变量列表---------------------"
-        # print_g "file_path=$file_path"
-        # print_g "file_name=$file_name"
-        # print_g "file_type=$file_type"
-        #print_g "file_path_name=$file_path_name"
-        # print_g "file=$file"
-          # # #   print_g "pre_trans_new_file_path=$pre_trans_new_file_path"
-
-         #print_y "------------------------------------------------------"
-        #  rm -rf $file_path_name
+        print_r $t
+        print_r $file_name
+        print_r $file_type
+        print_r $file_path_name
         # ffmpeg -i ./周杰伦-开不了口.mp3 -metadata  album="开不了口" -metadata title="开不了口" -metadata artist=周杰伦  tmp.mp3
-        ffmpeg -i $file_path_name -metadata  album="权谋风云" -metadata artist="老梁向古人借智慧" $file_path/tmp.mp3
+        # ffmpeg -i $file_path_name -metadata title="开不了口"  album="权谋风云" -metadata artist="老梁向古人借智慧" $file_path/tmp.mp3
         if [[ $? == 0 ]]; then
-                rm -rf $file_path_name
-                mv $file_path/tmp.mp3 $file_path_name
+                # rm -rf $file_path_name
+                # mv $file_path/tmp.mp3 $file_path_name
                 print_g $Info "替换完成：$file_name"
-                rm -rf $file_path/tmp.mp3
+                # rm -rf $file_path/tmp.mp3
             else
                 print_r $Error "替换失败:$file_name"
                 exit

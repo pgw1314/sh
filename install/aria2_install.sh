@@ -18,6 +18,7 @@ aria2_log="/var/local/aria2/aria2.log"
 Folder="/usr/local/aria2"
 aria2c="/usr/bin/aria2c"
 Crontab_file="/usr/bin/crontab"
+download_path="/home/www/Downloads"
 
 Green_font_prefix="\033[32m" && Red_font_prefix="\033[31m" && Green_background_prefix="\033[42;37m" && Red_background_prefix="\033[41;37m" && Font_color_suffix="\033[0m"
 Info="${Green_font_prefix}[信息]${Font_color_suffix}"
@@ -163,6 +164,7 @@ Installation_dependency(){
 }
 Install_aria2(){
 	check_root
+	mkdir -p "${download_path}"
 	[[ -e ${aria2c} ]] && echo -e "${Error} Aria2 已安装，请检查 !" && exit 1
 	check_sys
 	echo -e "${Info} 开始安装/配置 依赖..."
@@ -249,7 +251,7 @@ Set_aria2_RPC_passwd(){
 				if [[ ${read_123} != "1" ]]; then
 					Restart_aria2
 				fi
-			else 
+			else
 				echo -e "${Error} 密码修改失败！旧密码为：${Green_font_prefix}${aria2_passwd}${Font_color_suffix}"
 			fi
 		else
@@ -259,7 +261,7 @@ Set_aria2_RPC_passwd(){
 				if [[ ${read_123} != "1" ]]; then
 					Restart_aria2
 				fi
-			else 
+			else
 				echo -e "${Error} 密码修改失败！旧密码为：${Green_font_prefix}${aria2_passwd}${Font_color_suffix}"
 			fi
 		fi
@@ -292,7 +294,7 @@ Set_aria2_RPC_port(){
 				if [[ ${read_123} != "1" ]]; then
 					Restart_aria2
 				fi
-			else 
+			else
 				echo -e "${Error} 端口修改失败！旧端口为：${Green_font_prefix}${aria2_port}${Font_color_suffix}"
 			fi
 		else
@@ -305,7 +307,7 @@ Set_aria2_RPC_port(){
 				if [[ ${read_123} != "1" ]]; then
 					Restart_aria2
 				fi
-			else 
+			else
 				echo -e "${Error} 端口修改失败！旧密码为：${Green_font_prefix}${aria2_port}${Font_color_suffix}"
 			fi
 		fi
@@ -336,7 +338,7 @@ Set_aria2_RPC_dir(){
 					if [[ ${read_123} != "1" ]]; then
 						Restart_aria2
 					fi
-				else 
+				else
 					echo -e "${Error} 位置修改失败！旧位置为：${Green_font_prefix}${aria2_dir}${Font_color_suffix}"
 				fi
 			else
@@ -348,7 +350,7 @@ Set_aria2_RPC_dir(){
 					if [[ ${read_123} != "1" ]]; then
 						Restart_aria2
 					fi
-				else 
+				else
 					echo -e "${Error} 位置修改失败！旧位置为：${Green_font_prefix}${aria2_dir}${Font_color_suffix}"
 				fi
 			fi
@@ -399,7 +401,7 @@ Read_config(){
 		aria2_port=$(echo -e "${conf_text}"|grep "rpc-listen-port="|awk -F "=" '{print $NF}')
 		aria2_passwd=$(echo -e "${conf_text}"|grep "rpc-secret="|awk -F "=" '{print $NF}')
 	fi
-	
+
 }
 View_Aria2(){
 	check_installed_status
@@ -590,7 +592,7 @@ if [[ "${action}" == "setting" ]]; then
 
     echo && echo -e " Aria2 一键安装管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
       -- Toyo | doub.io/shell-jc4 --
-      
+
      ${Green_font_prefix} 0.${Font_color_suffix} 升级脚本
     ————————————
      ${Green_font_prefix} 1.${Font_color_suffix} 安装 Aria2
@@ -618,7 +620,7 @@ if [[ "${action}" == "setting" ]]; then
     fi
     echo
     stty erase '^H' && read -p " 请输入数字 [0-10]:" num
-    
+
 fi
 
 num=1
@@ -666,9 +668,3 @@ num=1
 
 # # 重新启动
 # Restart_aria2
-
-
-
-
-
-
